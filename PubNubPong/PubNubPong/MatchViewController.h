@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+@class PubNub;
+
 @interface MatchViewController : UIViewController
+
+- (instancetype)initWithPubNubClient:(PubNub *)client;
++ (instancetype)matchViewControllerWithClient:(PubNub *)client;
 
 @end

@@ -8,11 +8,12 @@
 
 #import <PubNub/PubNub.h>
 #import "AppDelegate.h"
+#import "MatchViewController.h"
 
 @interface AppDelegate () <
                             PNObjectEventListener
                             >
-
+@property (nonatomic, strong, readwrite) PubNub *client;
 @end
 
 @implementation AppDelegate
@@ -20,9 +21,15 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window.backgroundColor = [UIColor whiteColor];
+    [self.window makeKeyAndVisible];
     PNConfiguration *config = [PNConfiguration configurationWithPublishKey:@"demo-36" subscribeKey:@"demo-36"];
     self.client = [PubNub clientWithConfiguration:config];
     [self.client addListener:self];
+    
+    MatchViewController *matchViewController = [[MatchViewController alloc] init];
+    self.window.rootViewController = matchViewController;
     return YES;
 }
 
@@ -46,6 +53,7 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    [self.client unsubscribeFromAll];
 }
 
 #pragma mark - PNObjectEventListener

@@ -9,13 +9,13 @@
 /* Begin PBXBuildFile section */
 		516389CD1D0F21EE00E6401E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 516389CC1D0F21EE00E6401E /* main.m */; };
 		516389D01D0F21EF00E6401E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 516389CF1D0F21EF00E6401E /* AppDelegate.m */; };
-		516389D31D0F21EF00E6401E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 516389D21D0F21EF00E6401E /* ViewController.m */; };
-		516389D61D0F21EF00E6401E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 516389D41D0F21EF00E6401E /* Main.storyboard */; };
 		516389D81D0F21EF00E6401E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 516389D71D0F21EF00E6401E /* Assets.xcassets */; };
 		516389DB1D0F21EF00E6401E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 516389D91D0F21EF00E6401E /* LaunchScreen.storyboard */; };
 		516389E61D0F21EF00E6401E /* PubNubPongTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 516389E51D0F21EF00E6401E /* PubNubPongTests.m */; };
 		516389F11D0F21EF00E6401E /* PubNubPongUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 516389F01D0F21EF00E6401E /* PubNubPongUITests.m */; };
 		51638A001D0F244300E6401E /* MatchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 516389FF1D0F244300E6401E /* MatchViewController.m */; };
+		51638A031D0F26BC00E6401E /* PNPPaddleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 51638A021D0F26BC00E6401E /* PNPPaddleView.m */; };
+		51638A061D0F26EC00E6401E /* PNPBallView.m in Sources */ = {isa = PBXBuildFile; fileRef = 51638A051D0F26EC00E6401E /* PNPBallView.m */; };
 		969BDE336AB1EC687593CE58 /* Pods_PubNubPong.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2670425860B5BE30273890FC /* Pods_PubNubPong.framework */; };
 /* End PBXBuildFile section */
 
@@ -44,9 +44,6 @@
 		516389CC1D0F21EE00E6401E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		516389CE1D0F21EF00E6401E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		516389CF1D0F21EF00E6401E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		516389D11D0F21EF00E6401E /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		516389D21D0F21EF00E6401E /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		516389D51D0F21EF00E6401E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		516389D71D0F21EF00E6401E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		516389DA1D0F21EF00E6401E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		516389DC1D0F21EF00E6401E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -58,6 +55,13 @@
 		516389F21D0F21EF00E6401E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		516389FE1D0F244300E6401E /* MatchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatchViewController.h; sourceTree = "<group>"; };
 		516389FF1D0F244300E6401E /* MatchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatchViewController.m; sourceTree = "<group>"; };
+		51638A011D0F26BC00E6401E /* PNPPaddleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PNPPaddleView.h; sourceTree = "<group>"; };
+		51638A021D0F26BC00E6401E /* PNPPaddleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PNPPaddleView.m; sourceTree = "<group>"; };
+		51638A041D0F26EC00E6401E /* PNPBallView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PNPBallView.h; sourceTree = "<group>"; };
+		51638A051D0F26EC00E6401E /* PNPBallView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PNPBallView.m; sourceTree = "<group>"; };
+		51638A0A1D0F323500E6401E /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = "<group>"; };
+		51638A0B1D0F323E00E6401E /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		51638A0C1D0F324500E6401E /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +102,7 @@
 		516389BF1D0F21EE00E6401E = {
 			isa = PBXGroup;
 			children = (
+				51638A091D0F322500E6401E /* Meta */,
 				516389CA1D0F21EE00E6401E /* PubNubPong */,
 				516389E41D0F21EF00E6401E /* PubNubPongTests */,
 				516389EF1D0F21EF00E6401E /* PubNubPongUITests */,
@@ -120,13 +125,9 @@
 		516389CA1D0F21EE00E6401E /* PubNubPong */ = {
 			isa = PBXGroup;
 			children = (
-				516389CE1D0F21EF00E6401E /* AppDelegate.h */,
-				516389CF1D0F21EF00E6401E /* AppDelegate.m */,
-				516389FE1D0F244300E6401E /* MatchViewController.h */,
-				516389FF1D0F244300E6401E /* MatchViewController.m */,
-				516389D11D0F21EF00E6401E /* ViewController.h */,
-				516389D21D0F21EF00E6401E /* ViewController.m */,
-				516389D41D0F21EF00E6401E /* Main.storyboard */,
+				51638A081D0F2E9500E6401E /* App Delegate */,
+				51638A0D1D0F328000E6401E /* Match View Controller */,
+				51638A071D0F26F400E6401E /* Game Objects */,
 				516389D71D0F21EF00E6401E /* Assets.xcassets */,
 				516389D91D0F21EF00E6401E /* LaunchScreen.storyboard */,
 				516389DC1D0F21EF00E6401E /* Info.plist */,
@@ -159,6 +160,45 @@
 				516389F21D0F21EF00E6401E /* Info.plist */,
 			);
 			path = PubNubPongUITests;
+			sourceTree = "<group>";
+		};
+		51638A071D0F26F400E6401E /* Game Objects */ = {
+			isa = PBXGroup;
+			children = (
+				51638A011D0F26BC00E6401E /* PNPPaddleView.h */,
+				51638A021D0F26BC00E6401E /* PNPPaddleView.m */,
+				51638A041D0F26EC00E6401E /* PNPBallView.h */,
+				51638A051D0F26EC00E6401E /* PNPBallView.m */,
+			);
+			name = "Game Objects";
+			sourceTree = "<group>";
+		};
+		51638A081D0F2E9500E6401E /* App Delegate */ = {
+			isa = PBXGroup;
+			children = (
+				516389CE1D0F21EF00E6401E /* AppDelegate.h */,
+				516389CF1D0F21EF00E6401E /* AppDelegate.m */,
+			);
+			name = "App Delegate";
+			sourceTree = "<group>";
+		};
+		51638A091D0F322500E6401E /* Meta */ = {
+			isa = PBXGroup;
+			children = (
+				51638A0B1D0F323E00E6401E /* README.md */,
+				51638A0A1D0F323500E6401E /* Podfile */,
+				51638A0C1D0F324500E6401E /* LICENSE */,
+			);
+			name = Meta;
+			sourceTree = "<group>";
+		};
+		51638A0D1D0F328000E6401E /* Match View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				516389FE1D0F244300E6401E /* MatchViewController.h */,
+				516389FF1D0F244300E6401E /* MatchViewController.m */,
+			);
+			name = "Match View Controller";
 			sourceTree = "<group>";
 		};
 		A7CDE5E584EA6A781FD78764 /* Frameworks */ = {
@@ -280,7 +320,6 @@
 			files = (
 				516389DB1D0F21EF00E6401E /* LaunchScreen.storyboard in Resources */,
 				516389D81D0F21EF00E6401E /* Assets.xcassets in Resources */,
-				516389D61D0F21EF00E6401E /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -353,8 +392,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				51638A061D0F26EC00E6401E /* PNPBallView.m in Sources */,
 				51638A001D0F244300E6401E /* MatchViewController.m in Sources */,
-				516389D31D0F21EF00E6401E /* ViewController.m in Sources */,
+				51638A031D0F26BC00E6401E /* PNPPaddleView.m in Sources */,
 				516389D01D0F21EF00E6401E /* AppDelegate.m in Sources */,
 				516389CD1D0F21EE00E6401E /* main.m in Sources */,
 			);
@@ -392,14 +432,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		516389D41D0F21EF00E6401E /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				516389D51D0F21EF00E6401E /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		516389D91D0F21EF00E6401E /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
