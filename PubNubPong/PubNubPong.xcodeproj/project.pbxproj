@@ -16,7 +16,7 @@
 		51638A001D0F244300E6401E /* MatchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 516389FF1D0F244300E6401E /* MatchViewController.m */; };
 		51638A031D0F26BC00E6401E /* PNPPaddleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 51638A021D0F26BC00E6401E /* PNPPaddleView.m */; };
 		51638A061D0F26EC00E6401E /* PNPBallView.m in Sources */ = {isa = PBXBuildFile; fileRef = 51638A051D0F26EC00E6401E /* PNPBallView.m */; };
-		51638A101D0F3A2700E6401E /* PNPMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 51638A0F1D0F3A2700E6401E /* PNPMessage.m */; };
+		51638A171D0F501300E6401E /* PNPMessenger.m in Sources */ = {isa = PBXBuildFile; fileRef = 51638A161D0F501300E6401E /* PNPMessenger.m */; };
 		969BDE336AB1EC687593CE58 /* Pods_PubNubPong.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2670425860B5BE30273890FC /* Pods_PubNubPong.framework */; };
 /* End PBXBuildFile section */
 
@@ -63,8 +63,8 @@
 		51638A0A1D0F323500E6401E /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = "<group>"; };
 		51638A0B1D0F323E00E6401E /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		51638A0C1D0F324500E6401E /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
-		51638A0E1D0F3A2700E6401E /* PNPMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PNPMessage.h; sourceTree = "<group>"; };
-		51638A0F1D0F3A2700E6401E /* PNPMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PNPMessage.m; sourceTree = "<group>"; };
+		51638A151D0F501300E6401E /* PNPMessenger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PNPMessenger.h; sourceTree = "<group>"; };
+		51638A161D0F501300E6401E /* PNPMessenger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PNPMessenger.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -208,8 +208,8 @@
 		51638A111D0F3A3300E6401E /* Pong Message */ = {
 			isa = PBXGroup;
 			children = (
-				51638A0E1D0F3A2700E6401E /* PNPMessage.h */,
-				51638A0F1D0F3A2700E6401E /* PNPMessage.m */,
+				51638A151D0F501300E6401E /* PNPMessenger.h */,
+				51638A161D0F501300E6401E /* PNPMessenger.m */,
 			);
 			name = "Pong Message";
 			sourceTree = "<group>";
@@ -405,7 +405,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				51638A101D0F3A2700E6401E /* PNPMessage.m in Sources */,
+				51638A171D0F501300E6401E /* PNPMessenger.m in Sources */,
 				51638A061D0F26EC00E6401E /* PNPBallView.m in Sources */,
 				51638A001D0F244300E6401E /* MatchViewController.m in Sources */,
 				51638A031D0F26BC00E6401E /* PNPPaddleView.m in Sources */,

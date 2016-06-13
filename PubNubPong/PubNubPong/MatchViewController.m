@@ -8,14 +8,17 @@
 
 #import <PubNub/PubNub.h>
 #import "MatchViewController.h"
+#import "PNPMessenger.h"
 #import "PNPPaddleView.h"
 #import "PNPBallView.h"
 
 @interface MatchViewController () <
                                     PNObjectEventListener,
+                                    PNPMessengerDelegate,
                                     UICollisionBehaviorDelegate
                                     >
 @property (nonatomic, strong) PubNub *client;
+@property (nonatomic, strong) PNPMessenger *messenger;
 @property (nonatomic, strong) PNPPaddleView *myPaddle;
 @property (nonatomic, strong) PNPPaddleView *opponentPaddle;
 @property (nonatomic, strong) PNPBallView *ballView;
@@ -63,6 +66,25 @@
 //    [self.view addSubview:self.myPaddle];
 //    self.ballView = [PNPBallView ballWithSideLength:16.0];
 //    [self.view addSubview:self.ballView];
+//    NSString *currentClientUUID = self.client.uuid.copy;
+//    [self.client hereNowForChannel:@"pubnubpong" withVerbosity:PNHereNowUUID completion:^(PNPresenceChannelHereNowResult * _Nullable result, PNErrorStatus * _Nullable status) {
+//        if (result.data.occupancy == 0) {
+//            return;
+//        }
+//        // let's just take the first opponent that isn't us
+//        __block NSString *opponentUniqueIdentifier = nil;
+//        [result.data.uuids enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+//            NSString *uuid = (NSString *)obj;
+//            if (![uuid isEqualToString:currentClientUUID]) {
+//                opponentUniqueIdentifier = uuid;
+//                *stop = YES;
+//            }
+//        }];
+//        if (opponentUniqueIdentifier) {
+//            [self resetOpponentWithUniqueIdentifier:opponentUniqueIdentifier];
+//        }
+//    }];
+    [self setNewOpponentForChannel:@"pubnubpong"];
     self.ballView.center = self.view.center;
     [self.client subscribeToChannels:@[@"pubnubpong"] withPresence:YES];
 }
@@ -108,6 +130,41 @@
 
 - (void)animationTimerTriggered:(NSTimer *)animationTimer {
 
+}
+     
+#pragma mark - Opponent
+
+- (void)setNewOpponentForChannel:(NSString *)channel {
+    NSParameterAssert(channel);
+    NSString *currentClientUUID = self.client.uuid.copy;
+    [self.client hereNowForChannel:channel withVerbosity:PNHereNowUUID completion:^(PNPresenceChannelHereNowResult * _Nullable result, PNErrorStatus * _Nullable status) {
+        if (result.data.occupancy == 0) {
+            return;
+        }
+        // let's just take the first opponent that isn't us
+        __block NSString *opponentUniqueIdentifier = nil;
+        [result.data.uuids enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            NSString *uuid = (NSString *)obj;
+            if (![uuid isEqualToString:currentClientUUID]) {
+                opponentUniqueIdentifier = uuid;
+                *stop = YES;
+            }
+        }];
+        if (opponentUniqueIdentifier) {
+            [self resetOpponentWithUniqueIdentifier:opponentUniqueIdentifier];
+        }
+    }];
+}
+
+- (void)resetOpponentWithUniqueIdentifier:(NSString *)uniqueIdentifier {
+    self.messenger = nil;
+    [self.opponentPaddle removeFromSuperview];
+    self.opponentPaddle = nil;
+    self.opponentPaddle = [PNPPaddleView paddleWithLength:120.0 andUniqueIdentifier:uniqueIdentifier];
+    [self.view addSubview:self.opponentPaddle];
+    self.messenger = [[PNPMessenger alloc] initWithClient:self.client myPaddle:self.myPaddle opponentPaddle:self.opponentPaddle andBall:self.ballView];
+    self.messenger.delegate = self;
+    [self.view setNeedsLayout];
 }
 
 #pragma mark - Orientation
@@ -174,19 +231,20 @@
 
 - (void)tapped:(UIGestureRecognizer *)gr {
     CGPoint anchorPoint = [gr locationInView:self.view];
-    NSString *anchorPointString = NSStringFromCGPoint(anchorPoint);
-    NSLog(@"%@", anchorPointString);
-    NSDictionary *anchorPointDictionary = @{
-                                            @"x": [NSString stringWithFormat:@"%f", anchorPoint.x],
-                                            @"y": [NSString stringWithFormat:@"%f", anchorPoint.y]
-                                            };
-    NSDictionary *message = @{
-                              self.myPaddle.uniqueIdentifier: anchorPointDictionary
-                              };
-    [self.client publish:message toChannel:@"pubnubpong" withCompletion:^(PNPublishStatus * _Nonnull status) {
-        NSLog(@"status: %@", status.debugDescription);
-    }];
+//    NSString *anchorPointString = NSStringFromCGPoint(anchorPoint);
+//    NSLog(@"%@", anchorPointString);
+//    NSDictionary *anchorPointDictionary = @{
+//                                            @"x": [NSString stringWithFormat:@"%f", anchorPoint.x],
+//                                            @"y": [NSString stringWithFormat:@"%f", anchorPoint.y]
+//                                            };
+//    NSDictionary *message = @{
+//                              self.myPaddle.uniqueIdentifier: anchorPointDictionary
+//                              };
+//    [self.client publish:message toChannel:@"pubnubpong" withCompletion:^(PNPublishStatus * _Nonnull status) {
+//        NSLog(@"status: %@", status.debugDescription);
+//    }];
     self.attacher.anchorPoint = anchorPoint;
+    [self.messenger publishMyAnchorPoint:anchorPoint onChannel:@"pubnubpong"];
 }
 
 - (void)reset {
@@ -196,6 +254,8 @@
     self.ballDynamicProperties = nil;
     self.paddleDynamicProperties = nil;
     self.attacher = nil;
+    
+    [self setNewOpponentForChannel:@"pubnubpong"];
     
     [self _initBehaviors];
 }
@@ -211,19 +271,19 @@
     }
 }
 
-- (void)client:(PubNub *)client didReceiveMessage:(PNMessageResult *)message {
-//    NSString *senderUniqueIdentifier = message.data.
-//    if ([message.data.message.envelope.senderUniqueIdentifier isEqualToString:self.opponentPaddle.uniqueIdentifier]) {
-//        NSDictionary *anchorPointDictionary = message.data.message[]
-//        self.opponentPaddle.center =
+//- (void)client:(PubNub *)client didReceiveMessage:(PNMessageResult *)message {
+////    NSString *senderUniqueIdentifier = message.data.
+////    if ([message.data.message.envelope.senderUniqueIdentifier isEqualToString:self.opponentPaddle.uniqueIdentifier]) {
+////        NSDictionary *anchorPointDictionary = message.data.message[]
+////        self.opponentPaddle.center =
+////    }
+//    if (message.data.message[self.opponentPaddle.uniqueIdentifier]) {
+//        NSDictionary *updatedCenterDictionary = message.data.message[self.opponentPaddle.uniqueIdentifier];
+//        CGPoint updatedCenter = CGPointMake([updatedCenterDictionary[@"x"] floatValue], [updatedCenterDictionary[@"y"] floatValue]);
+//        self.opponentPaddle.center = updatedCenter;
+//        [self.view setNeedsLayout];
 //    }
-    if (message.data.message[self.opponentPaddle.uniqueIdentifier]) {
-        NSDictionary *updatedCenterDictionary = message.data.message[self.opponentPaddle.uniqueIdentifier];
-        CGPoint updatedCenter = CGPointMake([updatedCenterDictionary[@"x"] floatValue], [updatedCenterDictionary[@"y"] floatValue]);
-        self.opponentPaddle.center = updatedCenter;
-        [self.view setNeedsLayout];
-    }
-}
+//}
 
 - (void)client:(PubNub *)client didReceivePresenceEvent:(PNPresenceEventResult *)event {
     // make sure we don't add a paddle on our own join
@@ -231,8 +291,18 @@
         [event.data.presenceEvent isEqualToString:@"join"] &&
         ![event.data.presence.uuid isEqualToString:self.client.uuid]
         ) {
-        self.opponentPaddle = [PNPPaddleView paddleWithLength:120.0f andUniqueIdentifier:event.data.presence.uuid];
-        [self.view addSubview:self.opponentPaddle];
+//        self.opponentPaddle = [PNPPaddleView paddleWithLength:120.0f andUniqueIdentifier:event.data.presence.uuid];
+//        [self.view addSubview:self.opponentPaddle];
+        [self resetOpponentWithUniqueIdentifier:event.data.presence.uuid];
+    }
+}
+
+#pragma mark - PNPMessengerDelegate
+
+- (void)messenger:(PNPMessenger *)messenger receivedMessage:(PNPMessage *)message {
+    if (message.opponentPaddle) {
+        self.opponentPaddle.center = message.opponentPaddle.position;
+        [self.view setNeedsLayout];
     }
 }
 
