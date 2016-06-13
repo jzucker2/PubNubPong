@@ -1,0 +1,612 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		516389CD1D0F21EE00E6401E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 516389CC1D0F21EE00E6401E /* main.m */; };
+		516389D01D0F21EF00E6401E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 516389CF1D0F21EF00E6401E /* AppDelegate.m */; };
+		516389D31D0F21EF00E6401E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 516389D21D0F21EF00E6401E /* ViewController.m */; };
+		516389D61D0F21EF00E6401E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 516389D41D0F21EF00E6401E /* Main.storyboard */; };
+		516389D81D0F21EF00E6401E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 516389D71D0F21EF00E6401E /* Assets.xcassets */; };
+		516389DB1D0F21EF00E6401E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 516389D91D0F21EF00E6401E /* LaunchScreen.storyboard */; };
+		516389E61D0F21EF00E6401E /* PubNubPongTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 516389E51D0F21EF00E6401E /* PubNubPongTests.m */; };
+		516389F11D0F21EF00E6401E /* PubNubPongUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 516389F01D0F21EF00E6401E /* PubNubPongUITests.m */; };
+		51638A001D0F244300E6401E /* MatchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 516389FF1D0F244300E6401E /* MatchViewController.m */; };
+		969BDE336AB1EC687593CE58 /* Pods_PubNubPong.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2670425860B5BE30273890FC /* Pods_PubNubPong.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		516389E21D0F21EF00E6401E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 516389C01D0F21EE00E6401E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 516389C71D0F21EE00E6401E;
+			remoteInfo = PubNubPong;
+		};
+		516389ED1D0F21EF00E6401E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 516389C01D0F21EE00E6401E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 516389C71D0F21EE00E6401E;
+			remoteInfo = PubNubPong;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		2670425860B5BE30273890FC /* Pods_PubNubPong.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PubNubPong.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		364DCBDA5AC176DB667379DA /* Pods-PubNubPong.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PubNubPong.release.xcconfig"; path = "../Pods/Target Support Files/Pods-PubNubPong/Pods-PubNubPong.release.xcconfig"; sourceTree = "<group>"; };
+		39905EF1F966201F52D50AD7 /* Pods-PubNubPong.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PubNubPong.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-PubNubPong/Pods-PubNubPong.debug.xcconfig"; sourceTree = "<group>"; };
+		516389C81D0F21EE00E6401E /* PubNubPong.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PubNubPong.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		516389CC1D0F21EE00E6401E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		516389CE1D0F21EF00E6401E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		516389CF1D0F21EF00E6401E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		516389D11D0F21EF00E6401E /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		516389D21D0F21EF00E6401E /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		516389D51D0F21EF00E6401E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		516389D71D0F21EF00E6401E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		516389DA1D0F21EF00E6401E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		516389DC1D0F21EF00E6401E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		516389E11D0F21EF00E6401E /* PubNubPongTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PubNubPongTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		516389E51D0F21EF00E6401E /* PubNubPongTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PubNubPongTests.m; sourceTree = "<group>"; };
+		516389E71D0F21EF00E6401E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		516389EC1D0F21EF00E6401E /* PubNubPongUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PubNubPongUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		516389F01D0F21EF00E6401E /* PubNubPongUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PubNubPongUITests.m; sourceTree = "<group>"; };
+		516389F21D0F21EF00E6401E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		516389FE1D0F244300E6401E /* MatchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatchViewController.h; sourceTree = "<group>"; };
+		516389FF1D0F244300E6401E /* MatchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatchViewController.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		516389C51D0F21EE00E6401E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				969BDE336AB1EC687593CE58 /* Pods_PubNubPong.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		516389DE1D0F21EF00E6401E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		516389E91D0F21EF00E6401E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0D93C56A8218655419C5489E /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				39905EF1F966201F52D50AD7 /* Pods-PubNubPong.debug.xcconfig */,
+				364DCBDA5AC176DB667379DA /* Pods-PubNubPong.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		516389BF1D0F21EE00E6401E = {
+			isa = PBXGroup;
+			children = (
+				516389CA1D0F21EE00E6401E /* PubNubPong */,
+				516389E41D0F21EF00E6401E /* PubNubPongTests */,
+				516389EF1D0F21EF00E6401E /* PubNubPongUITests */,
+				516389C91D0F21EE00E6401E /* Products */,
+				0D93C56A8218655419C5489E /* Pods */,
+				A7CDE5E584EA6A781FD78764 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		516389C91D0F21EE00E6401E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				516389C81D0F21EE00E6401E /* PubNubPong.app */,
+				516389E11D0F21EF00E6401E /* PubNubPongTests.xctest */,
+				516389EC1D0F21EF00E6401E /* PubNubPongUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		516389CA1D0F21EE00E6401E /* PubNubPong */ = {
+			isa = PBXGroup;
+			children = (
+				516389CE1D0F21EF00E6401E /* AppDelegate.h */,
+				516389CF1D0F21EF00E6401E /* AppDelegate.m */,
+				516389FE1D0F244300E6401E /* MatchViewController.h */,
+				516389FF1D0F244300E6401E /* MatchViewController.m */,
+				516389D11D0F21EF00E6401E /* ViewController.h */,
+				516389D21D0F21EF00E6401E /* ViewController.m */,
+				516389D41D0F21EF00E6401E /* Main.storyboard */,
+				516389D71D0F21EF00E6401E /* Assets.xcassets */,
+				516389D91D0F21EF00E6401E /* LaunchScreen.storyboard */,
+				516389DC1D0F21EF00E6401E /* Info.plist */,
+				516389CB1D0F21EE00E6401E /* Supporting Files */,
+			);
+			path = PubNubPong;
+			sourceTree = "<group>";
+		};
+		516389CB1D0F21EE00E6401E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				516389CC1D0F21EE00E6401E /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		516389E41D0F21EF00E6401E /* PubNubPongTests */ = {
+			isa = PBXGroup;
+			children = (
+				516389E51D0F21EF00E6401E /* PubNubPongTests.m */,
+				516389E71D0F21EF00E6401E /* Info.plist */,
+			);
+			path = PubNubPongTests;
+			sourceTree = "<group>";
+		};
+		516389EF1D0F21EF00E6401E /* PubNubPongUITests */ = {
+			isa = PBXGroup;
+			children = (
+				516389F01D0F21EF00E6401E /* PubNubPongUITests.m */,
+				516389F21D0F21EF00E6401E /* Info.plist */,
+			);
+			path = PubNubPongUITests;
+			sourceTree = "<group>";
+		};
+		A7CDE5E584EA6A781FD78764 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2670425860B5BE30273890FC /* Pods_PubNubPong.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		516389C71D0F21EE00E6401E /* PubNubPong */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 516389F51D0F21EF00E6401E /* Build configuration list for PBXNativeTarget "PubNubPong" */;
+			buildPhases = (
+				9733F0401D2EE299D3D52F97 /* [CP] Check Pods Manifest.lock */,
+				516389C41D0F21EE00E6401E /* Sources */,
+				516389C51D0F21EE00E6401E /* Frameworks */,
+				516389C61D0F21EE00E6401E /* Resources */,
+				7228E2522EB9D1B66442104D /* [CP] Embed Pods Frameworks */,
+				816C3D4E47AA5C35692D83EB /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PubNubPong;
+			productName = PubNubPong;
+			productReference = 516389C81D0F21EE00E6401E /* PubNubPong.app */;
+			productType = "com.apple.product-type.application";
+		};
+		516389E01D0F21EF00E6401E /* PubNubPongTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 516389F81D0F21EF00E6401E /* Build configuration list for PBXNativeTarget "PubNubPongTests" */;
+			buildPhases = (
+				516389DD1D0F21EF00E6401E /* Sources */,
+				516389DE1D0F21EF00E6401E /* Frameworks */,
+				516389DF1D0F21EF00E6401E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				516389E31D0F21EF00E6401E /* PBXTargetDependency */,
+			);
+			name = PubNubPongTests;
+			productName = PubNubPongTests;
+			productReference = 516389E11D0F21EF00E6401E /* PubNubPongTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		516389EB1D0F21EF00E6401E /* PubNubPongUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 516389FB1D0F21EF00E6401E /* Build configuration list for PBXNativeTarget "PubNubPongUITests" */;
+			buildPhases = (
+				516389E81D0F21EF00E6401E /* Sources */,
+				516389E91D0F21EF00E6401E /* Frameworks */,
+				516389EA1D0F21EF00E6401E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				516389EE1D0F21EF00E6401E /* PBXTargetDependency */,
+			);
+			name = PubNubPongUITests;
+			productName = PubNubPongUITests;
+			productReference = 516389EC1D0F21EF00E6401E /* PubNubPongUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		516389C01D0F21EE00E6401E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = "Jordan Zucker";
+				TargetAttributes = {
+					516389C71D0F21EE00E6401E = {
+						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = 76QPBMFFV2;
+					};
+					516389E01D0F21EF00E6401E = {
+						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = 76QPBMFFV2;
+						TestTargetID = 516389C71D0F21EE00E6401E;
+					};
+					516389EB1D0F21EF00E6401E = {
+						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = 76QPBMFFV2;
+						TestTargetID = 516389C71D0F21EE00E6401E;
+					};
+				};
+			};
+			buildConfigurationList = 516389C31D0F21EE00E6401E /* Build configuration list for PBXProject "PubNubPong" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 516389BF1D0F21EE00E6401E;
+			productRefGroup = 516389C91D0F21EE00E6401E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				516389C71D0F21EE00E6401E /* PubNubPong */,
+				516389E01D0F21EF00E6401E /* PubNubPongTests */,
+				516389EB1D0F21EF00E6401E /* PubNubPongUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		516389C61D0F21EE00E6401E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				516389DB1D0F21EF00E6401E /* LaunchScreen.storyboard in Resources */,
+				516389D81D0F21EF00E6401E /* Assets.xcassets in Resources */,
+				516389D61D0F21EF00E6401E /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		516389DF1D0F21EF00E6401E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		516389EA1D0F21EF00E6401E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		7228E2522EB9D1B66442104D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-PubNubPong/Pods-PubNubPong-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		816C3D4E47AA5C35692D83EB /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-PubNubPong/Pods-PubNubPong-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9733F0401D2EE299D3D52F97 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		516389C41D0F21EE00E6401E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				51638A001D0F244300E6401E /* MatchViewController.m in Sources */,
+				516389D31D0F21EF00E6401E /* ViewController.m in Sources */,
+				516389D01D0F21EF00E6401E /* AppDelegate.m in Sources */,
+				516389CD1D0F21EE00E6401E /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		516389DD1D0F21EF00E6401E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				516389E61D0F21EF00E6401E /* PubNubPongTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		516389E81D0F21EF00E6401E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				516389F11D0F21EF00E6401E /* PubNubPongUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		516389E31D0F21EF00E6401E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 516389C71D0F21EE00E6401E /* PubNubPong */;
+			targetProxy = 516389E21D0F21EF00E6401E /* PBXContainerItemProxy */;
+		};
+		516389EE1D0F21EF00E6401E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 516389C71D0F21EE00E6401E /* PubNubPong */;
+			targetProxy = 516389ED1D0F21EF00E6401E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		516389D41D0F21EF00E6401E /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				516389D51D0F21EF00E6401E /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		516389D91D0F21EF00E6401E /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				516389DA1D0F21EF00E6401E /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		516389F31D0F21EF00E6401E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		516389F41D0F21EF00E6401E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		516389F61D0F21EF00E6401E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 39905EF1F966201F52D50AD7 /* Pods-PubNubPong.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = PubNubPong/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = stanera.PubNubPong;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		516389F71D0F21EF00E6401E /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 364DCBDA5AC176DB667379DA /* Pods-PubNubPong.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = PubNubPong/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = stanera.PubNubPong;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		516389F91D0F21EF00E6401E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = PubNubPongTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = stanera.PubNubPongTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PubNubPong.app/PubNubPong";
+			};
+			name = Debug;
+		};
+		516389FA1D0F21EF00E6401E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = PubNubPongTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = stanera.PubNubPongTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PubNubPong.app/PubNubPong";
+			};
+			name = Release;
+		};
+		516389FC1D0F21EF00E6401E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = PubNubPongUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = stanera.PubNubPongUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = PubNubPong;
+			};
+			name = Debug;
+		};
+		516389FD1D0F21EF00E6401E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = PubNubPongUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = stanera.PubNubPongUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = PubNubPong;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		516389C31D0F21EE00E6401E /* Build configuration list for PBXProject "PubNubPong" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				516389F31D0F21EF00E6401E /* Debug */,
+				516389F41D0F21EF00E6401E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		516389F51D0F21EF00E6401E /* Build configuration list for PBXNativeTarget "PubNubPong" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				516389F61D0F21EF00E6401E /* Debug */,
+				516389F71D0F21EF00E6401E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		516389F81D0F21EF00E6401E /* Build configuration list for PBXNativeTarget "PubNubPongTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				516389F91D0F21EF00E6401E /* Debug */,
+				516389FA1D0F21EF00E6401E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		516389FB1D0F21EF00E6401E /* Build configuration list for PBXNativeTarget "PubNubPongUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				516389FC1D0F21EF00E6401E /* Debug */,
+				516389FD1D0F21EF00E6401E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 516389C01D0F21EE00E6401E /* Project object */;
+}
