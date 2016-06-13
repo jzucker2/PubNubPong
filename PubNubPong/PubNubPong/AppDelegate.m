@@ -28,7 +28,7 @@
     self.client = [PubNub clientWithConfiguration:config];
     [self.client addListener:self];
     
-    MatchViewController *matchViewController = [[MatchViewController alloc] init];
+    MatchViewController *matchViewController = [MatchViewController matchViewControllerWithClient:self.client];
     self.window.rootViewController = matchViewController;
     return YES;
 }

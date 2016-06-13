@@ -10,7 +10,10 @@
 
 @interface PNPPaddleView : UIView
 
-- (instancetype)initWithPaddleLength:(CGFloat)length;
-+ (instancetype)paddleWithLength:(CGFloat)length;
+@property (nonatomic, assign, readonly) CGFloat length;
+@property (nonatomic, copy, readonly) NSString *uniqueIdentifier;
+
+- (instancetype)initWithPaddleLength:(CGFloat)length andUniqueIdentifier:(NSString *)uniqueIdentifier;
++ (instancetype)paddleWithLength:(CGFloat)length andUniqueIdentifier:(NSString *)uniqueIdentifier;
 
 @end

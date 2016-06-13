@@ -16,7 +16,8 @@
                                     UICollisionBehaviorDelegate
                                     >
 @property (nonatomic, strong) PubNub *client;
-@property (nonatomic, strong) PNPPaddleView *mainPlayerPaddle;
+@property (nonatomic, strong) PNPPaddleView *myPaddle;
+@property (nonatomic, strong) PNPPaddleView *opponentPaddle;
 @property (nonatomic, strong) PNPBallView *ballView;
 @property (nonatomic, strong) UIDynamicAnimator *animator;
 @property (nonatomic, strong) UIPushBehavior *pusher;
@@ -24,6 +25,7 @@
 @property (nonatomic, strong) UIDynamicItemBehavior *paddleDynamicProperties;
 @property (nonatomic, strong) UIDynamicItemBehavior *ballDynamicProperties;
 @property (nonatomic, strong) UIAttachmentBehavior *attacher;
+@property (nonatomic, weak) NSTimer *animationTimer;
 @end
 
 @implementation MatchViewController
@@ -47,8 +49,8 @@
 - (void)loadView {
     UIView *mainView = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     mainView.backgroundColor = [UIColor blackColor];
-    self.mainPlayerPaddle = [PNPPaddleView paddleWithLength:120.0];
-    [mainView addSubview:self.mainPlayerPaddle];
+    self.myPaddle = [PNPPaddleView paddleWithLength:120.0 andUniqueIdentifier:self.client.uuid];
+    [mainView addSubview:self.myPaddle];
     self.ballView = [PNPBallView ballWithSideLength:16.0];
     [mainView addSubview:self.ballView];
     self.view = mainView;
@@ -57,6 +59,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+//    self.myPaddle = [PNPPaddleView paddleWithLength:120.0 andUniqueIdentifier:self.client.uuid];
+//    [self.view addSubview:self.myPaddle];
+//    self.ballView = [PNPBallView ballWithSideLength:16.0];
+//    [self.view addSubview:self.ballView];
     self.ballView.center = self.view.center;
     [self.client subscribeToChannels:@[@"pubnubpong"] withPresence:YES];
 }
@@ -89,6 +95,21 @@
     [self _initBehaviors];
 }
 
+#pragma mark - Animation Timer
+
+- (void)startAnimationTimer {
+    self.animationTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(animationTimerTriggered:) userInfo:nil repeats:YES];
+}
+
+- (void)cancelAnimationTimer {
+    [self.animationTimer invalidate];
+    self.animationTimer = nil;
+}
+
+- (void)animationTimerTriggered:(NSTimer *)animationTimer {
+
+}
+
 #pragma mark - Orientation
 
 - (BOOL)shouldAutorotate {
@@ -117,7 +138,7 @@
     [self.animator addBehavior:self.pusher];
     
     // Step 1: Add collisions
-    self.collider = [[UICollisionBehavior alloc] initWithItems:@[self.ballView, self.mainPlayerPaddle]];
+    self.collider = [[UICollisionBehavior alloc] initWithItems:@[self.ballView, self.myPaddle]];
     self.collider.collisionDelegate = self;
     self.collider.collisionMode = UICollisionBehaviorModeEverything;
     self.collider.translatesReferenceBoundsIntoBoundary = YES;
@@ -130,7 +151,7 @@
     [self.animator addBehavior:self.ballDynamicProperties];
     
     self.paddleDynamicProperties = [[UIDynamicItemBehavior alloc]
-                                    initWithItems:@[self.mainPlayerPaddle]];
+                                    initWithItems:@[self.myPaddle]];
     self.paddleDynamicProperties.allowsRotation = NO;
     [self.animator addBehavior:self.paddleDynamicProperties];
     
@@ -143,8 +164,8 @@
     self.ballDynamicProperties.resistance = 0.0;
     
     // Step 5: Move paddle
-    CGPoint anchor = CGPointMake(CGRectGetMidX(self.mainPlayerPaddle.frame), CGRectGetMidY(self.mainPlayerPaddle.frame));
-    self.attacher = [[UIAttachmentBehavior alloc] initWithItem:self.mainPlayerPaddle
+    CGPoint anchor = CGPointMake(CGRectGetMidX(self.myPaddle.frame), CGRectGetMidY(self.myPaddle.frame));
+    self.attacher = [[UIAttachmentBehavior alloc] initWithItem:self.myPaddle
                                               attachedToAnchor:anchor];
     [self.animator addBehavior:self.attacher];
 }
@@ -152,7 +173,20 @@
 #pragma mark - Actions
 
 - (void)tapped:(UIGestureRecognizer *)gr {
-    self.attacher.anchorPoint = [gr locationInView:self.view];
+    CGPoint anchorPoint = [gr locationInView:self.view];
+    NSString *anchorPointString = NSStringFromCGPoint(anchorPoint);
+    NSLog(@"%@", anchorPointString);
+    NSDictionary *anchorPointDictionary = @{
+                                            @"x": [NSString stringWithFormat:@"%f", anchorPoint.x],
+                                            @"y": [NSString stringWithFormat:@"%f", anchorPoint.y]
+                                            };
+    NSDictionary *message = @{
+                              self.myPaddle.uniqueIdentifier: anchorPointDictionary
+                              };
+    [self.client publish:message toChannel:@"pubnubpong" withCompletion:^(PNPublishStatus * _Nonnull status) {
+        NSLog(@"status: %@", status.debugDescription);
+    }];
+    self.attacher.anchorPoint = anchorPoint;
 }
 
 - (void)reset {
@@ -166,18 +200,40 @@
     [self _initBehaviors];
 }
 
+#pragma mark - Ball Reactions
+
+
 #pragma mark - PNObjectEventListener
 
 - (void)client:(PubNub *)client didReceiveStatus:(PNStatus *)status {
-    
+    if (status.isError) {
+        NSLog(@"Client (%@) received error status: %@", client, status.debugDescription);
+    }
 }
 
 - (void)client:(PubNub *)client didReceiveMessage:(PNMessageResult *)message {
-    
+//    NSString *senderUniqueIdentifier = message.data.
+//    if ([message.data.message.envelope.senderUniqueIdentifier isEqualToString:self.opponentPaddle.uniqueIdentifier]) {
+//        NSDictionary *anchorPointDictionary = message.data.message[]
+//        self.opponentPaddle.center =
+//    }
+    if (message.data.message[self.opponentPaddle.uniqueIdentifier]) {
+        NSDictionary *updatedCenterDictionary = message.data.message[self.opponentPaddle.uniqueIdentifier];
+        CGPoint updatedCenter = CGPointMake([updatedCenterDictionary[@"x"] floatValue], [updatedCenterDictionary[@"y"] floatValue]);
+        self.opponentPaddle.center = updatedCenter;
+        [self.view setNeedsLayout];
+    }
 }
 
 - (void)client:(PubNub *)client didReceivePresenceEvent:(PNPresenceEventResult *)event {
-    
+    // make sure we don't add a paddle on our own join
+    if (
+        [event.data.presenceEvent isEqualToString:@"join"] &&
+        ![event.data.presence.uuid isEqualToString:self.client.uuid]
+        ) {
+        self.opponentPaddle = [PNPPaddleView paddleWithLength:120.0f andUniqueIdentifier:event.data.presence.uuid];
+        [self.view addSubview:self.opponentPaddle];
+    }
 }
 
 @end
