@@ -8,7 +8,10 @@
 
 #import <PubNub/PubNub.h>
 #import "AppDelegate.h"
-#import "MatchViewController.h"
+//#import "MatchViewController.h"
+//#import "ChooseUsernameViewController.h"
+#import "LobbyViewController.h"
+#import "PNPConstants.h"
 
 @interface AppDelegate () <
                             PNObjectEventListener
@@ -24,13 +27,16 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
-    PNConfiguration *config = [PNConfiguration configurationWithPublishKey:@"demo-36" subscribeKey:@"demo-36"];
+    PNConfiguration *config = [PNConfiguration configurationWithPublishKey:kPNPPubKey subscribeKey:kPNPSubKey];
+    config.heartbeatNotificationOptions = PNHeartbeatNotifyAll;
     // need to configure heartbeat
     self.client = [PubNub clientWithConfiguration:config];
     [self.client addListener:self];
     
-    MatchViewController *matchViewController = [MatchViewController matchViewControllerWithClient:self.client];
-    self.window.rootViewController = matchViewController;
+//    MatchViewController *matchViewController = [MatchViewController matchViewControllerWithClient:self.client];
+//    ChooseUsernameViewController *usernameViewController = [ChooseUsernameViewController usernameViewControllerWithClient:self.client];
+    LobbyViewController *lobbyViewController = [LobbyViewController lobbyViewControllerWithClient:self.client];
+    self.window.rootViewController = lobbyViewController;
     return YES;
 }
 
