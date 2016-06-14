@@ -136,7 +136,10 @@
 #pragma mark - PNObjectEventListener
 
 - (void)client:(PubNub *)client didReceiveMessage:(PNMessageResult *)message {
-    [self.delegate messenger:self receivedMessage:[self messageWithPubNubMessageResult:message]];
+    PNPMessage *translatedMessage = [self messageWithPubNubMessageResult:message];
+    if (translatedMessage) {
+        [self.delegate messenger:self receivedMessage:translatedMessage];
+    }
 }
 
 @end
