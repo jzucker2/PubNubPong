@@ -316,7 +316,7 @@
 - (void)messenger:(PNPMessenger *)messenger receivedMessage:(PNPMessage *)message {
     if (message.opponentPaddle) {
         self.opponentPaddle.center = message.opponentPaddle.position;
-        [self.view setNeedsLayout];
+//        [self.view setNeedsLayout];
     }
 }
 
