@@ -293,6 +293,11 @@
 					516389C71D0F21EE00E6401E = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = BSKYS9EZN8;
+						SystemCapabilities = {
+							com.apple.DataProtection = {
+								enabled = 1;
+							};
+						};
 					};
 					516389E01D0F21EF00E6401E = {
 						CreatedOnToolsVersion = 7.3.1;
