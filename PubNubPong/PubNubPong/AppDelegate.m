@@ -25,6 +25,7 @@
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     PNConfiguration *config = [PNConfiguration configurationWithPublishKey:@"demo-36" subscribeKey:@"demo-36"];
+    // need to configure heartbeat
     self.client = [PubNub clientWithConfiguration:config];
     [self.client addListener:self];
     
