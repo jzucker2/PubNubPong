@@ -292,7 +292,7 @@
 				TargetAttributes = {
 					516389C71D0F21EE00E6401E = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = 76QPBMFFV2;
+						DevelopmentTeam = BSKYS9EZN8;
 					};
 					516389E01D0F21EF00E6401E = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -546,11 +546,11 @@
 			baseConfigurationReference = 39905EF1F966201F52D50AD7 /* Pods-PubNubPong.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Jordan Zucker (8K9Q7494TY)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = PubNubPong/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = stanera.PubNubPong;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pubnub.pubnubpong;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -561,11 +561,11 @@
 			baseConfigurationReference = 364DCBDA5AC176DB667379DA /* Pods-PubNubPong.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Jordan Zucker (8K9Q7494TY)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = PubNubPong/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = stanera.PubNubPong;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pubnub.pubnubpong;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
