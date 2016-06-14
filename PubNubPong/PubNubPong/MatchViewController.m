@@ -25,9 +25,10 @@
 @property (nonatomic, strong) UIDynamicAnimator *animator;
 @property (nonatomic, strong) UIPushBehavior *pusher;
 @property (nonatomic, strong) UICollisionBehavior *collider;
-@property (nonatomic, strong) UIDynamicItemBehavior *paddleDynamicProperties;
+@property (nonatomic, strong) UIDynamicItemBehavior *myPaddleDynamicProperties;
+@property (nonatomic, strong) UIDynamicItemBehavior *opponentPaddleDynamicProperties;
 @property (nonatomic, strong) UIDynamicItemBehavior *ballDynamicProperties;
-@property (nonatomic, strong) UIAttachmentBehavior *attacher;
+@property (nonatomic, strong) UIAttachmentBehavior *myAttacher;
 @property (nonatomic, weak) NSTimer *animationTimer;
 @end
 
@@ -158,6 +159,7 @@
 
 - (void)resetOpponentWithUniqueIdentifier:(NSString *)uniqueIdentifier {
     self.messenger = nil;
+    self.opponentPaddleDynamicProperties = nil;
     [self.opponentPaddle removeFromSuperview];
     self.opponentPaddle = nil;
     self.opponentPaddle = [PNPPaddleView paddleWithLength:120.0 andUniqueIdentifier:uniqueIdentifier];
@@ -165,6 +167,7 @@
     self.messenger = [[PNPMessenger alloc] initWithClient:self.client myPaddle:self.myPaddle opponentPaddle:self.opponentPaddle andBall:self.ballView];
     self.messenger.delegate = self;
     [self.view setNeedsLayout];
+    [self _initBehaviors];
 }
 
 #pragma mark - Orientation
@@ -195,7 +198,11 @@
     [self.animator addBehavior:self.pusher];
     
     // Step 1: Add collisions
-    self.collider = [[UICollisionBehavior alloc] initWithItems:@[self.ballView, self.myPaddle]];
+    NSMutableArray *items = [@[self.ballView, self.myPaddle] mutableCopy];
+    if (self.opponentPaddle) {
+        [items addObject:self.opponentPaddle];
+    }
+    self.collider = [[UICollisionBehavior alloc] initWithItems:items.copy];
     self.collider.collisionDelegate = self;
     self.collider.collisionMode = UICollisionBehaviorModeEverything;
     self.collider.translatesReferenceBoundsIntoBoundary = YES;
@@ -207,13 +214,20 @@
     self.ballDynamicProperties.allowsRotation = NO;
     [self.animator addBehavior:self.ballDynamicProperties];
     
-    self.paddleDynamicProperties = [[UIDynamicItemBehavior alloc]
+    self.myPaddleDynamicProperties = [[UIDynamicItemBehavior alloc]
                                     initWithItems:@[self.myPaddle]];
-    self.paddleDynamicProperties.allowsRotation = NO;
-    [self.animator addBehavior:self.paddleDynamicProperties];
+    self.myPaddleDynamicProperties.allowsRotation = NO;
+    [self.animator addBehavior:self.myPaddleDynamicProperties];
+    
+    if (self.opponentPaddle) {
+        self.opponentPaddleDynamicProperties = [[UIDynamicItemBehavior alloc] initWithItems:@[self.opponentPaddle]];
+        self.opponentPaddleDynamicProperties.allowsRotation = NO;
+        self.opponentPaddleDynamicProperties.density = 1000.0f;
+        [self.animator addBehavior:self.opponentPaddleDynamicProperties];
+    }
     
     // Step 3: Heavy paddle
-    self.paddleDynamicProperties.density = 1000.0f;
+    self.myPaddleDynamicProperties.density = 1000.0f;
     
     // Step 4: Better collisions, no friction
     self.ballDynamicProperties.elasticity = 1.0;
@@ -222,9 +236,9 @@
     
     // Step 5: Move paddle
     CGPoint anchor = CGPointMake(CGRectGetMidX(self.myPaddle.frame), CGRectGetMidY(self.myPaddle.frame));
-    self.attacher = [[UIAttachmentBehavior alloc] initWithItem:self.myPaddle
+    self.myAttacher = [[UIAttachmentBehavior alloc] initWithItem:self.myPaddle
                                               attachedToAnchor:anchor];
-    [self.animator addBehavior:self.attacher];
+    [self.animator addBehavior:self.myAttacher];
 }
 
 #pragma mark - Actions
@@ -243,7 +257,7 @@
 //    [self.client publish:message toChannel:@"pubnubpong" withCompletion:^(PNPublishStatus * _Nonnull status) {
 //        NSLog(@"status: %@", status.debugDescription);
 //    }];
-    self.attacher.anchorPoint = anchorPoint;
+    self.myAttacher.anchorPoint = anchorPoint;
     [self.messenger publishMyAnchorPoint:anchorPoint onChannel:@"pubnubpong"];
 }
 
@@ -252,12 +266,12 @@
     self.collider = nil;
     self.pusher = nil;
     self.ballDynamicProperties = nil;
-    self.paddleDynamicProperties = nil;
-    self.attacher = nil;
+    self.myPaddleDynamicProperties = nil;
+    self.myAttacher = nil;
     
     [self setNewOpponentForChannel:@"pubnubpong"];
     
-    [self _initBehaviors];
+//    [self _initBehaviors];
 }
 
 #pragma mark - Ball Reactions
