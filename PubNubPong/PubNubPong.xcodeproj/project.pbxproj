@@ -19,6 +19,9 @@
 		51638A171D0F501300E6401E /* PNPMessenger.m in Sources */ = {isa = PBXBuildFile; fileRef = 51638A161D0F501300E6401E /* PNPMessenger.m */; };
 		51CBBE1A1D10B695006B6E3D /* ChooseUsernameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 51CBBE191D10B695006B6E3D /* ChooseUsernameViewController.m */; };
 		51CBBE1D1D10B6A3006B6E3D /* LobbyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 51CBBE1C1D10B6A3006B6E3D /* LobbyViewController.m */; };
+		51CF32C31D11BAFE00CA58EA /* PNPPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 51CF32C21D11BAFE00CA58EA /* PNPPlayer.m */; };
+		51CF32C61D11BB0800CA58EA /* PNPLobby.m in Sources */ = {isa = PBXBuildFile; fileRef = 51CF32C51D11BB0800CA58EA /* PNPLobby.m */; };
+		51CF32C91D11BB1200CA58EA /* PNPMatchmaker.m in Sources */ = {isa = PBXBuildFile; fileRef = 51CF32C81D11BB1200CA58EA /* PNPMatchmaker.m */; };
 		969BDE336AB1EC687593CE58 /* Pods_PubNubPong.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2670425860B5BE30273890FC /* Pods_PubNubPong.framework */; };
 /* End PBXBuildFile section */
 
@@ -72,6 +75,13 @@
 		51CBBE1B1D10B6A3006B6E3D /* LobbyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LobbyViewController.h; sourceTree = "<group>"; };
 		51CBBE1C1D10B6A3006B6E3D /* LobbyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LobbyViewController.m; sourceTree = "<group>"; };
 		51CBBE1E1D10BF11006B6E3D /* PNPConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PNPConstants.h; sourceTree = "<group>"; };
+		51CF32C11D11BAFE00CA58EA /* PNPPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PNPPlayer.h; sourceTree = "<group>"; };
+		51CF32C21D11BAFE00CA58EA /* PNPPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PNPPlayer.m; sourceTree = "<group>"; };
+		51CF32C41D11BB0800CA58EA /* PNPLobby.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PNPLobby.h; sourceTree = "<group>"; };
+		51CF32C51D11BB0800CA58EA /* PNPLobby.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PNPLobby.m; sourceTree = "<group>"; };
+		51CF32C71D11BB1200CA58EA /* PNPMatchmaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PNPMatchmaker.h; sourceTree = "<group>"; };
+		51CF32C81D11BB1200CA58EA /* PNPMatchmaker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PNPMatchmaker.m; sourceTree = "<group>"; };
+		51CF32CA1D11C8B700CA58EA /* JSONFormatting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONFormatting.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,6 +148,7 @@
 				51CBBE1E1D10BF11006B6E3D /* PNPConstants.h */,
 				51638A081D0F2E9500E6401E /* App Delegate */,
 				51638A0D1D0F328000E6401E /* View Controllers */,
+				51CF32C01D11BAE600CA58EA /* Meta Objects */,
 				51638A111D0F3A3300E6401E /* Pong Message */,
 				51638A071D0F26F400E6401E /* Game Objects */,
 				516389D71D0F21EF00E6401E /* Assets.xcassets */,
@@ -220,10 +231,24 @@
 		51638A111D0F3A3300E6401E /* Pong Message */ = {
 			isa = PBXGroup;
 			children = (
+				51CF32CA1D11C8B700CA58EA /* JSONFormatting.h */,
 				51638A151D0F501300E6401E /* PNPMessenger.h */,
 				51638A161D0F501300E6401E /* PNPMessenger.m */,
 			);
 			name = "Pong Message";
+			sourceTree = "<group>";
+		};
+		51CF32C01D11BAE600CA58EA /* Meta Objects */ = {
+			isa = PBXGroup;
+			children = (
+				51CF32C11D11BAFE00CA58EA /* PNPPlayer.h */,
+				51CF32C21D11BAFE00CA58EA /* PNPPlayer.m */,
+				51CF32C41D11BB0800CA58EA /* PNPLobby.h */,
+				51CF32C51D11BB0800CA58EA /* PNPLobby.m */,
+				51CF32C71D11BB1200CA58EA /* PNPMatchmaker.h */,
+				51CF32C81D11BB1200CA58EA /* PNPMatchmaker.m */,
+			);
+			name = "Meta Objects";
 			sourceTree = "<group>";
 		};
 		A7CDE5E584EA6A781FD78764 /* Frameworks */ = {
@@ -423,6 +448,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				51638A171D0F501300E6401E /* PNPMessenger.m in Sources */,
+				51CF32C61D11BB0800CA58EA /* PNPLobby.m in Sources */,
+				51CF32C31D11BAFE00CA58EA /* PNPPlayer.m in Sources */,
 				51638A061D0F26EC00E6401E /* PNPBallView.m in Sources */,
 				51638A001D0F244300E6401E /* MatchViewController.m in Sources */,
 				51CBBE1A1D10B695006B6E3D /* ChooseUsernameViewController.m in Sources */,
@@ -430,6 +457,7 @@
 				516389D01D0F21EF00E6401E /* AppDelegate.m in Sources */,
 				516389CD1D0F21EE00E6401E /* main.m in Sources */,
 				51CBBE1D1D10B6A3006B6E3D /* LobbyViewController.m in Sources */,
+				51CF32C91D11BB1200CA58EA /* PNPMatchmaker.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

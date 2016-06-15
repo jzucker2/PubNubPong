@@ -7,10 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@protocol JSONFormatting <NSObject>
-- (id)JSONFormattedMessage;
-@end
+#import "JSONFormatting.h"
 
 @class PNPPaddleView;
 @class PNPBallView;

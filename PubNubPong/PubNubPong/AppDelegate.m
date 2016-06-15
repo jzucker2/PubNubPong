@@ -12,11 +12,15 @@
 //#import "ChooseUsernameViewController.h"
 #import "LobbyViewController.h"
 #import "PNPConstants.h"
+#import "PNPPlayer.h"
+#import "PNPLobby.h"
+#import "PNPMatchmaker.h"
 
-@interface AppDelegate () <
-                            PNObjectEventListener
-                            >
+@interface AppDelegate ()
 @property (nonatomic, strong, readwrite) PubNub *client;
+@property (nonatomic, strong) PNPPlayer *localPlayer;
+@property (nonatomic, strong) PNPLobby *lobby;
+@property (nonatomic, strong) PNPMatchmaker *matchmaker;
 @end
 
 @implementation AppDelegate
@@ -28,14 +32,18 @@
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     PNConfiguration *config = [PNConfiguration configurationWithPublishKey:kPNPPubKey subscribeKey:kPNPSubKey];
-    config.heartbeatNotificationOptions = PNHeartbeatNotifyAll;
     // need to configure heartbeat
+    config.heartbeatNotificationOptions = PNHeartbeatNotifyAll;
     self.client = [PubNub clientWithConfiguration:config];
-    [self.client addListener:self];
     
+    self.localPlayer = [PNPPlayer playerWithUniqueIdentifier:self.client.uuid];
 //    MatchViewController *matchViewController = [MatchViewController matchViewControllerWithClient:self.client];
 //    ChooseUsernameViewController *usernameViewController = [ChooseUsernameViewController usernameViewControllerWithClient:self.client];
-    LobbyViewController *lobbyViewController = [LobbyViewController lobbyViewControllerWithClient:self.client];
+    self.lobby = [PNPLobby lobbyWithLocalPlayer:self.localPlayer andClient:self.client];
+    
+    self.matchmaker = [PNPMatchmaker matchmakerWithLocalPlayer:self.localPlayer andClient:self.client];
+    
+    LobbyViewController *lobbyViewController = [LobbyViewController lobbyViewControllerWithLobby:self.lobby andMatchmaker:self.matchmaker];
     self.window.rootViewController = lobbyViewController;
     return YES;
 }
@@ -61,14 +69,6 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     [self.client unsubscribeFromAll];
-}
-
-#pragma mark - PNObjectEventListener
-
-- (void)client:(PubNub *)client didReceiveStatus:(PNStatus *)status {
-    if (status.isError) {
-        NSLog(@"Client (%@) received error status: %@", client, status.debugDescription);
-    }
 }
 
 @end
