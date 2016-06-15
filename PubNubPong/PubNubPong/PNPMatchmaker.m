@@ -66,12 +66,63 @@
 
 @end
 
+@interface PNPMatchProposalReply ()
+@property (nonatomic, copy, readwrite) NSString *matchChannelName;
+@property (nonatomic, strong, readwrite) PNPPlayer *opponentPlayer;
+@property (nonatomic, assign, readwrite) BOOL reply;
+
+@end
+
+@implementation PNPMatchProposalReply
+
+- (instancetype)initWithOpponentPlayer:(PNPPlayer *)opponentPlayer andMatchChannelName:(NSString *)matchChannelName andReply:(BOOL)reply {
+    self = [super init];
+    if (self) {
+        _matchChannelName = matchChannelName;
+        _opponentPlayer = opponentPlayer;
+        _reply = reply;
+    }
+    return self;
+}
+
++ (instancetype)replyWithOpponentPlayer:(PNPPlayer *)opponentPlayer andMatchChannelName:(NSString *)matchChannelName andReply:(BOOL)reply {
+    return [[self alloc] initWithOpponentPlayer:opponentPlayer andMatchChannelName:matchChannelName andReply:reply];
+}
+
++ (BOOL)canBeInitializedWithPubNubMessageResult:(PNMessageResult *)pubNubMessageResult {
+    if ([pubNubMessageResult.data.message[@"type"] isEqualToString:@"reply"]) {
+        return YES;
+    }
+    return NO;
+}
+
+- (instancetype)initWithPubNubMessageResult:(PNMessageResult *)pubNubMessageResult {
+    NSParameterAssert(pubNubMessageResult);
+    NSDictionary *payload = pubNubMessageResult.data.message;
+    NSParameterAssert([payload[@"type"] isEqualToString:@"reply"]);
+    PNPPlayer *opponentPlayer = [[PNPPlayer alloc] initWithPubNubMessageResult:pubNubMessageResult];
+    BOOL reply = [payload[@"reply"] boolValue];
+    NSString *matchChannelName = payload[@"matchChannelName"];
+    return [[self class] replyWithOpponentPlayer:opponentPlayer andMatchChannelName:matchChannelName andReply:reply];
+}
+
+- (id)JSONFormattedMessage {
+    return @{
+             @"type": @"reply",
+             @"opponent": self.opponentPlayer.JSONFormattedMessage,
+             @"matchChannelName": self.matchChannelName,
+             @"reply": @(self.reply),
+             };
+}
+
+@end
+
 @interface PNPMatchmaker () <
                             PNObjectEventListener
                             >
 @property (nonatomic, strong) PNPPlayer *localPlayer;
 @property (nonatomic, strong) PubNub *client;
-@property (nonatomic, assign, getter=isProposing) BOOL proposing;
+@property (nonatomic, assign, readwrite) PNPMatchmakerState state;
 @end
 
 @implementation PNPMatchmaker
@@ -79,7 +130,7 @@
 - (instancetype)initWithLocalPlayer:(PNPPlayer *)localPlayer andClient:(PubNub *)client {
     self = [super init];
     if (self) {
-        _proposing = NO;
+        _state = PNPMatchmakerStateOpen;
         _localPlayer = localPlayer;
         _client = client;
         [_client addListener:self];
@@ -94,13 +145,15 @@
 - (BOOL)proposeMatchToPlayer:(PNPPlayer *)opponent {
     if (
         [opponent isEqual:self.localPlayer] ||
-        self.isProposing
+        self.state == PNPMatchmakerStateProposing ||
+        self.state == PNPMatchmakerStateAccepted
         ) {
         return NO;
     }
     NSString *matchChannelName = [NSUUID UUID].UUIDString;
     PNPMatchProposal *proposal = [PNPMatchProposal proposalWithCreator:self.localPlayer andOpponent:opponent andMatchChannelName:matchChannelName];
-    self.proposing = YES;
+    self.state = PNPMatchmakerStateProposing;
+    [self.client subscribeToChannels:@[matchChannelName] withPresence:YES];
     [self.client publish:proposal.JSONFormattedMessage toChannel:kPNPLobbyChannel withCompletion:^(PNPublishStatus * _Nonnull status) {
         
     }];
@@ -114,8 +167,20 @@
 }
 
 - (void)client:(PubNub *)client didReceiveMessage:(PNMessageResult *)message {
-    if ([PNPMatchProposal canBeInitializedWithPubNubMessageResult:message]) {
+    if (
+        (self.state == PNPMatchmakerStateOpen) &&
+        [PNPMatchProposal canBeInitializedWithPubNubMessageResult:message]
+        ) {
         [self.delegate matchmaker:self receivedMatchProposal:[PNPMatchProposal proposalFromPubNubMessageResult:message]];
+        return;
+    }
+    if (
+        (self.state == PNPMatchmakerStateProposing) &&
+        [PNPMatchProposalReply canBeInitializedWithPubNubMessageResult:message]
+        ) {
+        PNPMatchProposalReply *reply = [[PNPMatchProposalReply alloc] initWithPubNubMessageResult:message];
+        self.state = (reply.reply ? PNPMatchmakerStateAccepted : PNPMatchmakerStateOpen);
+        [self.delegate matchmaker:self receivedMatchProposalReply:reply];
     }
 }
 
