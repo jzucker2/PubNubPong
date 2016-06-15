@@ -30,8 +30,7 @@ typedef NS_ENUM(NSInteger, PNPMatchmakerState) {
 
 - (instancetype)initWithCreator:(PNPPlayer *)creator andOpponent:(PNPPlayer *)opponent andMatchChannelName:(NSString *)matchChannelName;
 + (instancetype)proposalWithCreator:(PNPPlayer *)creator andOpponent:(PNPPlayer *)opponent andMatchChannelName:(NSString *)matchChannelName;
-- (instancetype)initWithPubNubMessageResult:(PNMessageResult *)pubNubMessageResult;
-+ (instancetype)proposalFromPubNubMessageResult:(PNMessageResult *)pubNubMessageResult;
++ (instancetype)proposalFromDictionary:(NSDictionary *)dictionary;
 
 @end
 

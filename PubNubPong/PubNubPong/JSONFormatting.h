@@ -8,14 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-@class PNMessageResult;
-
 @protocol JSONFormatting <NSObject>
 
 - (id)JSONFormattedMessage;
 
 @optional
-- (instancetype)initWithPubNubMessageResult:(PNMessageResult *)pubNubMessageResult;
-+ (BOOL)canBeInitializedWithPubNubMessageResult:(PNMessageResult *)pubNubMessageResult;
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary;
++ (BOOL)canBeInitializedWithDictionary:(NSDictionary *)dictionary;
 
 @end

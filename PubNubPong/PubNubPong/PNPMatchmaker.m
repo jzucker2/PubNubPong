@@ -34,18 +34,17 @@
     return [[self alloc] initWithCreator:creator andOpponent:opponent andMatchChannelName:matchChannelName];
 }
 
-- (instancetype)initWithPubNubMessageResult:(PNMessageResult *)pubNubMessageResult {
-    NSParameterAssert(pubNubMessageResult);
-    NSDictionary *payload = pubNubMessageResult.data.message;
-    NSParameterAssert([payload[@"type"] isEqualToString:@"proposal"]);
-    PNPPlayer *creator = [[PNPPlayer alloc] initWithPubNubMessageResult:payload[@"creator"]];
-    PNPPlayer *opponent = [[PNPPlayer alloc] initWithPubNubMessageResult:payload[@"opponent"]];
-    self = [self initWithCreator:creator andOpponent:opponent andMatchChannelName:payload[@"matchChannelName"]];
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary {
+    NSParameterAssert(dictionary);
+    NSParameterAssert([dictionary[@"type"] isEqualToString:@"proposal"]);
+    PNPPlayer *creator = [[PNPPlayer alloc] initWithDictionary:dictionary[@"creator"]];
+    PNPPlayer *opponent = [[PNPPlayer alloc] initWithDictionary:dictionary[@"opponent"]];
+    self = [self initWithCreator:creator andOpponent:opponent andMatchChannelName:dictionary[@"matchChannelName"]];
     return self;
 }
 
-+ (instancetype)proposalFromPubNubMessageResult:(PNMessageResult *)pubNubMessageResult {
-    return [[self alloc] initWithPubNubMessageResult:pubNubMessageResult];
++ (instancetype)proposalFromDictionary:(NSDictionary *)dictionary {
+    return [[self alloc] initWithDictionary:dictionary];
 }
 
 - (id)JSONFormattedMessage {
@@ -57,8 +56,8 @@
              };
 }
 
-+ (BOOL)canBeInitializedWithPubNubMessageResult:(PNMessageResult *)pubNubMessageResult {
-    if ([pubNubMessageResult.data.message[@"type"] isEqualToString:@"proposal"]) {
++ (BOOL)canBeInitializedWithDictionary:(NSDictionary *)dictionary {
+    if ([dictionary[@"type"] isEqualToString:@"proposal"]) {
         return YES;
     }
     return NO;
@@ -89,20 +88,19 @@
     return [[self alloc] initWithOpponentPlayer:opponentPlayer andMatchChannelName:matchChannelName andReply:reply];
 }
 
-+ (BOOL)canBeInitializedWithPubNubMessageResult:(PNMessageResult *)pubNubMessageResult {
-    if ([pubNubMessageResult.data.message[@"type"] isEqualToString:@"reply"]) {
++ (BOOL)canBeInitializedWithDictionary:(NSDictionary *)dictionary {
+    if ([dictionary[@"type"] isEqualToString:@"reply"]) {
         return YES;
     }
     return NO;
 }
 
-- (instancetype)initWithPubNubMessageResult:(PNMessageResult *)pubNubMessageResult {
-    NSParameterAssert(pubNubMessageResult);
-    NSDictionary *payload = pubNubMessageResult.data.message;
-    NSParameterAssert([payload[@"type"] isEqualToString:@"reply"]);
-    PNPPlayer *opponentPlayer = [[PNPPlayer alloc] initWithPubNubMessageResult:pubNubMessageResult];
-    BOOL reply = [payload[@"reply"] boolValue];
-    NSString *matchChannelName = payload[@"matchChannelName"];
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary {
+    NSParameterAssert(dictionary);
+    NSParameterAssert([dictionary[@"type"] isEqualToString:@"reply"]);
+    PNPPlayer *opponentPlayer = [[PNPPlayer alloc] initWithDictionary:dictionary[@"opponent"]];
+    BOOL reply = [dictionary[@"reply"] boolValue];
+    NSString *matchChannelName = dictionary[@"matchChannelName"];
     return [[self class] replyWithOpponentPlayer:opponentPlayer andMatchChannelName:matchChannelName andReply:reply];
 }
 
@@ -169,16 +167,16 @@
 - (void)client:(PubNub *)client didReceiveMessage:(PNMessageResult *)message {
     if (
         (self.state == PNPMatchmakerStateOpen) &&
-        [PNPMatchProposal canBeInitializedWithPubNubMessageResult:message]
+        [PNPMatchProposal canBeInitializedWithDictionary:message.data.message]
         ) {
-        [self.delegate matchmaker:self receivedMatchProposal:[PNPMatchProposal proposalFromPubNubMessageResult:message]];
+        [self.delegate matchmaker:self receivedMatchProposal:[PNPMatchProposal proposalFromDictionary:message.data.message]];
         return;
     }
     if (
         (self.state == PNPMatchmakerStateProposing) &&
-        [PNPMatchProposalReply canBeInitializedWithPubNubMessageResult:message]
+        [PNPMatchProposalReply canBeInitializedWithDictionary:message.data.message]
         ) {
-        PNPMatchProposalReply *reply = [[PNPMatchProposalReply alloc] initWithPubNubMessageResult:message];
+        PNPMatchProposalReply *reply = [[PNPMatchProposalReply alloc] initWithDictionary:message.data.message];
         self.state = (reply.reply ? PNPMatchmakerStateAccepted : PNPMatchmakerStateOpen);
         [self.delegate matchmaker:self receivedMatchProposalReply:reply];
     }

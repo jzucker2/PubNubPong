@@ -79,6 +79,7 @@
 }
 
 - (void)leaveLobby {
+    self.allPlayers = @[];
     [self.client unsubscribeFromChannels:@[kPNPLobbyChannel] withPresence:YES];
 }
 
