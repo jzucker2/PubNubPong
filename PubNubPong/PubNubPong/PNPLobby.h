@@ -24,6 +24,9 @@
 
 - (void)updateAllPlayersInLobby;
 - (PNPPlayer *)randomPlayerFromLobby;
+- (void)joinLobby;
+- (void)leaveLobby;
+- (BOOL)localPlayerIsInLobby;
 
 @end
 

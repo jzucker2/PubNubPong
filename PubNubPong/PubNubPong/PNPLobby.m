@@ -74,6 +74,18 @@
     return [self.allPlayers filteredArrayUsingPredicate:nonLocalPlayersPredicate];
 }
 
+- (void)joinLobby {
+    [self.client subscribeToChannels:@[kPNPLobbyChannel] withPresence:YES];
+}
+
+- (void)leaveLobby {
+    [self.client unsubscribeFromChannels:@[kPNPLobbyChannel] withPresence:YES];
+}
+
+- (BOOL)localPlayerIsInLobby {
+    return [self.client.channels containsObject:kPNPLobbyChannel];
+}
+
 #pragma mark - PNObjectEventListener
 
 - (void)client:(PubNub *)client didReceiveStatus:(PNStatus *)status {

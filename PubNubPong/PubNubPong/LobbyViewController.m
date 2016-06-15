@@ -107,6 +107,10 @@
     
 }
 
+- (void)matchmaker:(PNPMatchmaker *)matchmaker receivedMatchProposalReply:(PNPMatchProposalReply *)proposalReply {
+    
+}
+
 
 //- (instancetype)initWithClient:(PubNub *)client {
 //    NSParameterAssert(client);
