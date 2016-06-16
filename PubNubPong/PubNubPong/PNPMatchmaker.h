@@ -34,14 +34,11 @@ typedef NS_ENUM(NSInteger, PNPMatchmakerState) {
 
 @end
 
-@interface PNPMatchProposalReply : NSObject <JSONFormatting>
-
-@property (nonatomic, copy, readonly) NSString *matchChannelName;
-@property (nonatomic, strong, readonly) PNPPlayer *opponentPlayer;
+@interface PNPMatchProposalReply : PNPMatchProposal <JSONFormatting>
 @property (nonatomic, assign, readonly) BOOL reply;
 
-- (instancetype)initReply:(BOOL)reply withOpponentPlayer:(PNPPlayer *)opponentPlayer andMatchChannelName:(NSString *)matchChannelName;
-+ (instancetype)reply:(BOOL)reply withOpponentPlayer:(PNPPlayer *)opponentPlayer andMatchChannelName:(NSString *)matchChannelName;
+- (instancetype)initReply:(BOOL)reply withCreator:(PNPPlayer *)creator withOpponentPlayer:(PNPPlayer *)opponentPlayer andMatchChannelName:(NSString *)matchChannelName;
++ (instancetype)reply:(BOOL)reply withCreator:(PNPPlayer *)creator withOpponentPlayer:(PNPPlayer *)opponentPlayer andMatchChannelName:(NSString *)matchChannelName;
 - (instancetype)initReply:(BOOL)reply withMatchProposal:(PNPMatchProposal *)matchProposal;
 + (instancetype)reply:(BOOL)reply withProposal:(PNPMatchProposal *)matchProposal;
 

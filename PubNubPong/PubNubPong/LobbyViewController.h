@@ -8,12 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+@class PubNub;
 @class PNPLobby;
 @class PNPMatchmaker;
 
 @interface LobbyViewController : UIViewController
 
-- (instancetype)initWithLobby:(PNPLobby *)lobby andMatchmaker:(PNPMatchmaker *)matchmaker;
-+ (instancetype)lobbyViewControllerWithLobby:(PNPLobby *)lobby andMatchmaker:(PNPMatchmaker *)matchmaker;
+- (instancetype)initWithClient:(PubNub *)client lobby:(PNPLobby *)lobby andMatchmaker:(PNPMatchmaker *)matchmaker;
++ (instancetype)lobbyViewControllerWithClient:(PubNub *)client lobby:(PNPLobby *)lobby andMatchmaker:(PNPMatchmaker *)matchmaker;
 
 @end

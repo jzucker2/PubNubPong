@@ -48,6 +48,13 @@
     return [self.uniqueIdentifier hash];
 }
 
+- (BOOL)isLocalPlayerForClient:(PubNub *)client {
+    if (!client) {
+        return NO;
+    }
+    return [self.uniqueIdentifier isEqualToString:client.uuid];
+}
+
 - (BOOL)isEqualToPlayer:(PNPPlayer *)player {
     if (!player) {
         return NO;

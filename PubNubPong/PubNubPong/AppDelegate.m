@@ -47,7 +47,7 @@
     
     self.matchmaker = [PNPMatchmaker matchmakerWithLocalPlayer:self.localPlayer andClient:self.client];
     
-    LobbyViewController *lobbyViewController = [LobbyViewController lobbyViewControllerWithLobby:self.lobby andMatchmaker:self.matchmaker];
+    LobbyViewController *lobbyViewController = [LobbyViewController lobbyViewControllerWithClient:self.client lobby:self.lobby andMatchmaker:self.matchmaker];
     self.window.rootViewController = lobbyViewController;
     return YES;
 }

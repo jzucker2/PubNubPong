@@ -69,31 +69,26 @@
 @end
 
 @interface PNPMatchProposalReply ()
-@property (nonatomic, copy, readwrite) NSString *matchChannelName;
-@property (nonatomic, strong, readwrite) PNPPlayer *opponentPlayer;
 @property (nonatomic, assign, readwrite) BOOL reply;
 
 @end
 
 @implementation PNPMatchProposalReply
 
-- (instancetype)initReply:(BOOL)reply withOpponentPlayer:(PNPPlayer *)opponentPlayer andMatchChannelName:(NSString *)matchChannelName {
-    self = [super init];
+- (instancetype)initReply:(BOOL)reply withCreator:(PNPPlayer *)creator withOpponentPlayer:(PNPPlayer *)opponentPlayer andMatchChannelName:(NSString *)matchChannelName {
+    self = [super initWithCreator:creator andOpponent:opponentPlayer andMatchChannelName:matchChannelName];
     if (self) {
-        _matchChannelName = matchChannelName;
-        _opponentPlayer = opponentPlayer;
         _reply = reply;
     }
     return self;
 }
 
-+ (instancetype)reply:(BOOL)reply withOpponentPlayer:(PNPPlayer *)opponentPlayer andMatchChannelName:(NSString *)matchChannelName {
-    return [[self alloc] initReply:reply withOpponentPlayer:opponentPlayer andMatchChannelName:matchChannelName];
++ (instancetype)reply:(BOOL)reply withCreator:(PNPPlayer *)creator withOpponentPlayer:(PNPPlayer *)opponentPlayer andMatchChannelName:(NSString *)matchChannelName {
+    return [[self alloc] initReply:reply withCreator:creator withOpponentPlayer:opponentPlayer andMatchChannelName:matchChannelName];
 }
 
 - (instancetype)initReply:(BOOL)reply withMatchProposal:(PNPMatchProposal *)matchProposal {
-    self = [self initReply:reply withOpponentPlayer:matchProposal.opponent andMatchChannelName:matchProposal.matchChannelName];
-    return self;
+    return [self initReply:reply withCreator:matchProposal.creator withOpponentPlayer:matchProposal.opponent andMatchChannelName:matchProposal.matchChannelName];
 }
 
 + (instancetype)reply:(BOOL)reply withProposal:(PNPMatchProposal *)matchProposal {
@@ -112,15 +107,17 @@
     NSParameterAssert([dictionary[@"type"] isEqualToString:@"reply"]);
     NSParameterAssert(dictionary[@"reply"]);
     PNPPlayer *opponentPlayer = [[PNPPlayer alloc] initWithDictionary:dictionary[@"opponent"]];
+    PNPPlayer *creator = [[PNPPlayer alloc] initWithDictionary:dictionary[@"creator"]];
     BOOL reply = [dictionary[@"reply"] boolValue];
     NSString *matchChannelName = dictionary[@"matchChannelName"];
-    return [[self class] reply:reply withOpponentPlayer:opponentPlayer andMatchChannelName:matchChannelName];
+    return [self initReply:reply withCreator:creator withOpponentPlayer:opponentPlayer andMatchChannelName:matchChannelName];
 }
 
 - (id)JSONFormattedMessage {
     return @{
              @"type": @"reply",
-             @"opponent": self.opponentPlayer.JSONFormattedMessage,
+             @"opponent": self.opponent.JSONFormattedMessage,
+             @"creator": self.creator.JSONFormattedMessage,
              @"matchChannelName": self.matchChannelName,
              @"reply": @(self.reply),
              };
@@ -210,7 +207,7 @@
         ) {
         PNPMatchProposalReply *reply = [[PNPMatchProposalReply alloc] initWithDictionary:message.data.message];
         // only show replies to the local player
-        if ([reply.opponentPlayer isEqualToPlayer:self.localPlayer]) {
+        if ([reply.creator isEqualToPlayer:self.localPlayer]) {
             self.state = (reply.reply ? PNPMatchmakerStateAccepted : PNPMatchmakerStateOpen);
             [self.delegate matchmaker:self receivedMatchProposalReply:reply];
         }

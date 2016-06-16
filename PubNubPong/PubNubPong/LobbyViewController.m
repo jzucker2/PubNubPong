@@ -6,17 +6,20 @@
 //  Copyright © 2016 Jordan Zucker. All rights reserved.
 //
 
+#import <PubNub/PubNub.h>
 #import "LobbyViewController.h"
 #import "PNPConstants.h"
 #import "PNPLobby.h"
 #import "PNPPlayer.h"
 #import "PNPMatchmaker.h"
+#import "PNPMatchUpdater.h"
+#import "MatchViewController.h"
 
 @interface LobbyViewController () <
                                     PNPLobbyDelegate,
                                     PNPMatchmakerDelegate
                                     >
-//@property (nonatomic, strong) PubNub *client;
+@property (nonatomic, strong) PubNub *client;
 @property (nonatomic, strong) PNPLobby *lobby;
 @property (nonatomic, strong) PNPMatchmaker *matchmaker;
 @property (nonatomic, strong) UIButton *proposeGameButton;
@@ -27,11 +30,13 @@
 
 @implementation LobbyViewController
 
-- (instancetype)initWithLobby:(PNPLobby *)lobby andMatchmaker:(PNPMatchmaker *)matchmaker {
+- (instancetype)initWithClient:(PubNub *)client lobby:(PNPLobby *)lobby andMatchmaker:(PNPMatchmaker *)matchmaker {
+    NSParameterAssert(client);
     NSParameterAssert(lobby);
     NSParameterAssert(matchmaker);
     self = [super init];
     if (self) {
+        _client = client;
         _lobby = lobby;
         _lobby.delegate = self;
         _matchmaker = matchmaker;
@@ -41,8 +46,8 @@
     return self;
 }
 
-+ (instancetype)lobbyViewControllerWithLobby:(PNPLobby *)lobby andMatchmaker:(PNPMatchmaker *)matchmaker {
-    return [[self alloc] initWithLobby:lobby andMatchmaker:matchmaker];
++ (instancetype)lobbyViewControllerWithClient:(PubNub *)client lobby:(PNPLobby *)lobby andMatchmaker:(PNPMatchmaker *)matchmaker {
+    return [[self alloc] initWithClient:client lobby:lobby andMatchmaker:matchmaker];
 }
 
 - (void)loadView {
@@ -85,9 +90,22 @@
 
 #pragma mark - Logic
 
-- (void)joinMatchWithChannelName:(NSString *)matchChannelName {
+- (void)joinMatchWithProposal:(PNPMatchProposal *)proposal {
     [self.lobby leaveLobby];
-    // refactor match view controller
+    // now handle starting game
+    PNPPlayer *localPlayer = nil;
+    PNPPlayer *opponent = nil;
+    
+    if ([proposal.creator isLocalPlayerForClient:self.client]) {
+        localPlayer = proposal.creator;
+        opponent = proposal.opponent;
+    } else {
+        localPlayer = proposal.opponent;
+        opponent = proposal.creator;
+    }
+    PNPMatchUpdater *updater = [PNPMatchUpdater matchUpdaterWithClient:self.client localPlayer:localPlayer andOpponent:opponent];
+    MatchViewController *matchViewController = [MatchViewController matchViewControllerWithClient:self.client matchProposal:proposal matchUpdater:updater];
+    [self presentViewController:matchViewController animated:YES completion:nil];
 }
 
 #pragma mark - UIActions
@@ -121,7 +139,7 @@
             PNPStrongify(self);
             reply = YES;
             // join match
-            [self joinMatchWithChannelName:proposal.matchChannelName];
+            [self joinMatchWithProposal:proposal];
         } else if ([action.title isEqualToString:kPNPMatchDeclineActionTitle]) {
             reply = NO;
         } else {
@@ -139,7 +157,7 @@
 - (void)matchmaker:(PNPMatchmaker *)matchmaker receivedMatchProposalReply:(PNPMatchProposalReply *)proposalReply {
     NSLog(@"%s", __PRETTY_FUNCTION__);
     if (proposalReply.reply) {
-        [self joinMatchWithChannelName:proposalReply.matchChannelName];
+        [self joinMatchWithProposal:proposalReply];
     }
 }
 
