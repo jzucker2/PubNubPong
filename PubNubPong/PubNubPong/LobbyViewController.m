@@ -114,6 +114,7 @@
         BOOL reply = NO;
         if ([action.title isEqualToString:kPNPMatchAcceptActionTitle]) {
             reply = YES;
+            // join match
         } else if ([action.title isEqualToString:kPNPMatchDeclineActionTitle]) {
             reply = NO;
         } else {
