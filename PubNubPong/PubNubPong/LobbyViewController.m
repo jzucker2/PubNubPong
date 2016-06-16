@@ -85,7 +85,7 @@
 
 #pragma mark - Logic
 
-- (void)joinMatch:(PNPMatchProposal *)matchProposal {
+- (void)joinMatchWithChannelName:(NSString *)matchChannelName {
     [self.lobby leaveLobby];
     // refactor match view controller
 }
@@ -121,7 +121,7 @@
             PNPStrongify(self);
             reply = YES;
             // join match
-            [self joinMatch:proposal];
+            [self joinMatchWithChannelName:proposal.matchChannelName];
         } else if ([action.title isEqualToString:kPNPMatchDeclineActionTitle]) {
             reply = NO;
         } else {
@@ -138,6 +138,9 @@
 
 - (void)matchmaker:(PNPMatchmaker *)matchmaker receivedMatchProposalReply:(PNPMatchProposalReply *)proposalReply {
     NSLog(@"%s", __PRETTY_FUNCTION__);
+    if (proposalReply.reply) {
+        [self joinMatchWithChannelName:proposalReply.matchChannelName];
+    }
 }
 
 
