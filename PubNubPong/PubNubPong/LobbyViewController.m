@@ -85,6 +85,10 @@
 
 #pragma mark - Logic
 
+- (void)joinMatch:(PNPMatchProposal *)matchProposal {
+    [self.lobby leaveLobby];
+    // refactor match view controller
+}
 
 #pragma mark - UIActions
 
@@ -110,11 +114,14 @@
     // returnType (^blockName)(parameterTypes) = ^returnType(parameters) {...};
     // (void (^ __nullable)(UIAlertAction *action))handler
     
+    PNPWeakify(self);
     void (^alertAction)(UIAlertAction *) = ^void(UIAlertAction *action) {
         BOOL reply = NO;
         if ([action.title isEqualToString:kPNPMatchAcceptActionTitle]) {
+            PNPStrongify(self);
             reply = YES;
             // join match
+            [self joinMatch:proposal];
         } else if ([action.title isEqualToString:kPNPMatchDeclineActionTitle]) {
             reply = NO;
         } else {
