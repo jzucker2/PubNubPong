@@ -9,6 +9,7 @@
 #import <PubNub/PubNub.h>
 #import "PNPMatchUpdater.h"
 #import "PNPPlayer.h"
+#import "PNPMatchmaker.h"
 
 //@interface PNPMatchUpdateComponent ()
 //@property (nonatomic, strong, readwrite) PNPPlayer *player;
@@ -114,30 +115,43 @@
                                 >
 @property (nonatomic, strong, readwrite) PNPPlayer *localPlayer;
 @property (nonatomic, strong, readwrite) PNPPlayer *opponentPlayer;
+@property (nonatomic, copy, readwrite) NSString *matchChannelName;
 @property (nonatomic, strong) PubNub *client;
 
 @end
 
 @implementation PNPMatchUpdater
 
-- (instancetype)initWithClient:(PubNub *)client localPlayer:(PNPPlayer *)localPlayer andOpponent:(PNPPlayer *)opponentPlayer {
+- (instancetype)initWithClient:(PubNub *)client andMatchProposal:(PNPMatchProposal *)matchProposal{
     self = [super init];
     if (self) {
         _client = client;
         [_client addListener:self];
+        PNPPlayer *localPlayer = nil;
+        PNPPlayer *opponent = nil;
+        
+        if ([matchProposal.creator isLocalPlayerForClient:_client]) {
+            localPlayer = matchProposal.creator;
+            opponent = matchProposal.opponent;
+        } else {
+            localPlayer = matchProposal.opponent;
+            opponent = matchProposal.creator;
+        }
         _localPlayer = localPlayer;
-        _opponentPlayer = opponentPlayer;
+        _opponentPlayer = opponent;
+        _matchChannelName = matchProposal.matchChannelName;
+        [_client subscribeToChannels:@[_matchChannelName] withPresence:YES];
     }
     return self;
 }
 
-+ (instancetype)matchUpdaterWithClient:(PubNub *)client localPlayer:(PNPPlayer *)localPlayer andOpponent:(PNPPlayer *)opponentPlayer {
-    return [[self alloc] initWithClient:client localPlayer:localPlayer andOpponent:opponentPlayer];
++ (instancetype)matchUpdaterWithClient:(PubNub *)client andMatchProposal:(PNPMatchProposal *)matchProposal {
+    return [[self alloc] initWithClient:client andMatchProposal:matchProposal];
 }
 
 - (void)updateLocalPlayerPosition:(CGPoint)position {
     PNPMatchUpdate *update = [PNPMatchUpdate updateWithPosition:position andPlayer:self.localPlayer];
-    [self.client publish:update.JSONFormattedMessage toChannel:@"what" withCompletion:^(PNPublishStatus * _Nonnull status) {
+    [self.client publish:update.JSONFormattedMessage toChannel:self.matchChannelName withCompletion:^(PNPublishStatus * _Nonnull status) {
         
     }];
 }
@@ -145,6 +159,7 @@
 #pragma mark - PNObjectEventListener
 
 - (void)client:(PubNub *)client didReceiveMessage:(PNMessageResult *)message {
+#warning also check channel
     if ([PNPMatchUpdate canBeInitializedWithDictionary:message.data.message]) {
         PNPMatchUpdate *update = [[PNPMatchUpdate alloc] initWithDictionary:message.data.message];
         // don't update with local player

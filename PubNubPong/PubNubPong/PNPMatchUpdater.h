@@ -11,6 +11,7 @@
 
 @class PNPPlayer;
 @class PubNub;
+@class PNPMatchProposal;
 
 //@interface PNPMatchUpdateComponent : NSObject <JSONFormatting>
 //@property (nonatomic, strong, readonly) PNPPlayer *player;
@@ -35,10 +36,11 @@
 
 @property (nonatomic, strong, readonly) PNPPlayer *localPlayer;
 @property (nonatomic, strong, readonly) PNPPlayer *opponentPlayer;
+@property (nonatomic, copy, readonly) NSString *matchChannelName;
 @property (nonatomic, weak) id<PNPMatchUpdaterDelegate> delegate;
 
-- (instancetype)initWithClient:(PubNub *)client localPlayer:(PNPPlayer *)localPlayer andOpponent:(PNPPlayer *)opponentPlayer;
-+ (instancetype)matchUpdaterWithClient:(PubNub *)client localPlayer:(PNPPlayer *)localPlayer andOpponent:(PNPPlayer *)opponentPlayer;
+- (instancetype)initWithClient:(PubNub *)client andMatchProposal:(PNPMatchProposal *)matchProposal;
++ (instancetype)matchUpdaterWithClient:(PubNub *)client andMatchProposal:(PNPMatchProposal *)matchProposal;
 
 // publish method?
 - (void)updateLocalPlayerPosition:(CGPoint)position;

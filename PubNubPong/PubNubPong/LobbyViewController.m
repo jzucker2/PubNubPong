@@ -93,17 +93,7 @@
 - (void)joinMatchWithProposal:(PNPMatchProposal *)proposal {
     [self.lobby leaveLobby];
     // now handle starting game
-    PNPPlayer *localPlayer = nil;
-    PNPPlayer *opponent = nil;
-    
-    if ([proposal.creator isLocalPlayerForClient:self.client]) {
-        localPlayer = proposal.creator;
-        opponent = proposal.opponent;
-    } else {
-        localPlayer = proposal.opponent;
-        opponent = proposal.creator;
-    }
-    PNPMatchUpdater *updater = [PNPMatchUpdater matchUpdaterWithClient:self.client localPlayer:localPlayer andOpponent:opponent];
+    PNPMatchUpdater *updater = [PNPMatchUpdater matchUpdaterWithClient:self.client andMatchProposal:proposal];
     MatchViewController *matchViewController = [MatchViewController matchViewControllerWithClient:self.client matchProposal:proposal matchUpdater:updater];
     [self presentViewController:matchViewController animated:YES completion:nil];
 }
