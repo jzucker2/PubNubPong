@@ -40,8 +40,10 @@ typedef NS_ENUM(NSInteger, PNPMatchmakerState) {
 @property (nonatomic, strong, readonly) PNPPlayer *opponentPlayer;
 @property (nonatomic, assign, readonly) BOOL reply;
 
-- (instancetype)initWithOpponentPlayer:(PNPPlayer *)opponentPlayer andMatchChannelName:(NSString *)matchChannelName andReply:(BOOL)reply;
-+ (instancetype)replyWithOpponentPlayer:(PNPPlayer *)opponentPlayer andMatchChannelName:(NSString *)matchChannelName andReply:(BOOL)reply;
+- (instancetype)initReply:(BOOL)reply withOpponentPlayer:(PNPPlayer *)opponentPlayer andMatchChannelName:(NSString *)matchChannelName;
++ (instancetype)reply:(BOOL)reply withOpponentPlayer:(PNPPlayer *)opponentPlayer andMatchChannelName:(NSString *)matchChannelName;
+- (instancetype)initReply:(BOOL)reply withMatchProposal:(PNPMatchProposal *)matchProposal;
++ (instancetype)reply:(BOOL)reply withProposal:(PNPMatchProposal *)matchProposal;
 
 @end
 
@@ -51,6 +53,7 @@ typedef NS_ENUM(NSInteger, PNPMatchmakerState) {
 + (instancetype)matchmakerWithLocalPlayer:(PNPPlayer *)localPlayer andClient:(PubNub *)client;
 
 - (BOOL)proposeMatchToPlayer:(PNPPlayer *)opponent; // if yes, then match has been proposed, if no then match was not proposed
+- (BOOL)replyToMatchProposal:(PNPMatchProposal *)matchProposal withDecision:(BOOL)willPlay;
 
 @property (nonatomic, weak) id<PNPMatchmakerDelegate> delegate;
 @property (nonatomic, assign, readonly) PNPMatchmakerState state;

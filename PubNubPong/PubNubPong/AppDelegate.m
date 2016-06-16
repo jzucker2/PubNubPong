@@ -33,6 +33,10 @@
     [self.window makeKeyAndVisible];
     PNConfiguration *config = [PNConfiguration configurationWithPublishKey:kPNPPubKey subscribeKey:kPNPSubKey];
     // need to configure heartbeat
+//    config.subscribeMaximumIdleTime = 30.0f;
+    // let's be aggressive with presence timeouts so the lobby doesn't get stale, this will also help with games too
+    config.presenceHeartbeatValue = 30.0f;
+    config.presenceHeartbeatInterval = 15.0f;
     config.heartbeatNotificationOptions = PNHeartbeatNotifyAll;
     self.client = [PubNub clientWithConfiguration:config];
     

@@ -28,8 +28,8 @@
         _localPlayer = localPlayer;
         _client = client;
         [_client addListener:self];
-        [_client subscribeToChannels:@[kPNPLobbyChannel] withPresence:YES];
-        _allPlayers = [NSArray array];
+//        [_client subscribeToChannels:@[kPNPLobbyChannel] withPresence:YES];
+        _allPlayers = @[];
     }
     return self;
 }
@@ -39,6 +39,7 @@
 }
 
 - (void)dealloc {
+    NSLog(@"%s", __PRETTY_FUNCTION__);
     [self.client unsubscribeFromChannels:@[kPNPLobbyChannel] withPresence:YES];
 }
 
@@ -81,10 +82,18 @@
 - (void)leaveLobby {
     self.allPlayers = @[];
     [self.client unsubscribeFromChannels:@[kPNPLobbyChannel] withPresence:YES];
+    [self.delegate lobby:self updatedAllPlayers:self.allPlayers];
 }
 
 - (BOOL)localPlayerIsInLobby {
-    return [self.client.channels containsObject:kPNPLobbyChannel];
+    return (
+//            [self playerIsInLobby:self.localPlayer] &&
+            [self.client.channels containsObject:kPNPLobbyChannel]
+            );
+}
+
+- (BOOL)playerIsInLobby:(PNPPlayer *)player {
+    return [self.allPlayers containsObject:player];
 }
 
 #pragma mark - PNObjectEventListener
@@ -94,10 +103,18 @@
         NSLog(@"self(%@): client (%@) received error status: %@", self, client, status.debugDescription);
         return;
     }
+    NSLog(@"%s status: %@", __PRETTY_FUNCTION__, status.debugDescription);
+    if (
+        (status.operation == PNSubscribeOperation)
+        ) {
+//        NSLog(@"status: %@", status.debugDescription);
+    }
 }
 
 - (void)client:(PubNub *)client didReceivePresenceEvent:(PNPresenceEventResult *)event {
-    [self updateAllPlayersInLobby];
+    if ([event.data.subscribedChannel isEqualToString:kPNPLobbyChannel]) {
+        [self updateAllPlayersInLobby];
+    }
 }
 
 @end

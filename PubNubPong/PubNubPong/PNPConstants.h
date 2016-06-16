@@ -12,9 +12,12 @@
 static NSString * const kPNPPubKey = @"pub-c-0340cca1-7cd2-4a44-94a9-f51582bdd384";
 static NSString * const kPNPSubKey = @"sub-c-8df5f212-3280-11e6-98f9-0619f8945a4f";
 
-static NSString * const kPNPLobbyChannel = @"PongLobby";
+static NSString * const kPNPLobbyChannel = @"PongLobby-V4";
 
 static NSString * const kPNPBallIdentifier = @"PongBall";
+
+static NSString * const kPNPMatchAcceptActionTitle = @"Accept";
+static NSString * const kPNPMatchDeclineActionTitle = @"Decline";
 
 #define PNPWeakify(__var) \
 __weak __typeof__(__var) __var ## _weak_ = (__var)

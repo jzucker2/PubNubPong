@@ -34,6 +34,8 @@
     if (self) {
         _lobby = lobby;
         _lobby.delegate = self;
+        _matchmaker = matchmaker;
+        _matchmaker.delegate = self;
         
     }
     return self;
@@ -73,7 +75,7 @@
     
     [self.view setNeedsLayout];
     
-    [self.lobby updateAllPlayersInLobby];
+    [self.lobby joinLobby];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -104,11 +106,30 @@
 #pragma mark - PNPMatchmakerDelegate
 
 - (void)matchmaker:(PNPMatchmaker *)matchmaker receivedMatchProposal:(PNPMatchProposal *)proposal {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Match?" message:@"Would you like to play Pong?" preferredStyle:UIAlertControllerStyleAlert];
+    // returnType (^blockName)(parameterTypes) = ^returnType(parameters) {...};
+    // (void (^ __nullable)(UIAlertAction *action))handler
     
+    void (^alertAction)(UIAlertAction *) = ^void(UIAlertAction *action) {
+        BOOL reply = NO;
+        if ([action.title isEqualToString:kPNPMatchAcceptActionTitle]) {
+            reply = YES;
+        } else if ([action.title isEqualToString:kPNPMatchDeclineActionTitle]) {
+            reply = NO;
+        } else {
+            NSLog(@"Unexpected action encountered!");
+        }
+        [matchmaker replyToMatchProposal:proposal withDecision:reply];
+    };
+    UIAlertAction *acceptAction = [UIAlertAction actionWithTitle:kPNPMatchAcceptActionTitle style:UIAlertActionStyleDefault handler:alertAction];
+    UIAlertAction *declineAction = [UIAlertAction actionWithTitle:kPNPMatchDeclineActionTitle style:UIAlertActionStyleCancel handler:alertAction];
+    [alertController addAction:declineAction];
+    [alertController addAction:acceptAction];
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 - (void)matchmaker:(PNPMatchmaker *)matchmaker receivedMatchProposalReply:(PNPMatchProposalReply *)proposalReply {
-    
+    NSLog(@"%s", __PRETTY_FUNCTION__);
 }
 
 

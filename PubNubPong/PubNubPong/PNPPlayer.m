@@ -29,12 +29,10 @@
     return [[self alloc] initWithUniqueIdentifier:uniqueIdentifier];
 }
 
-- (instancetype)initWithPubNubMessageResult:(PNMessageResult *)pubNubMessageResult {
-    NSParameterAssert(pubNubMessageResult);
-    NSDictionary *payload = pubNubMessageResult.data.message;
-    NSParameterAssert(payload);
-    NSParameterAssert([payload[@"type"] isEqualToString:@"player"]);
-    self = [self initWithUniqueIdentifier:payload[@"uniqueIdentifier"]];
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary {
+    NSParameterAssert(dictionary);
+    NSParameterAssert([dictionary[@"type"] isEqualToString:@"player"]);
+    self = [self initWithUniqueIdentifier:dictionary[@"uniqueIdentifier"]];
     return self;
 }
 

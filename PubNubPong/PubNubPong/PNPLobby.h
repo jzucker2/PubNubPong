@@ -27,6 +27,7 @@
 - (void)joinLobby;
 - (void)leaveLobby;
 - (BOOL)localPlayerIsInLobby;
+- (BOOL)playerIsInLobby:(PNPPlayer *)player;
 
 @end
 

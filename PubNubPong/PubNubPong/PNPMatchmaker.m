@@ -74,7 +74,7 @@
 
 @implementation PNPMatchProposalReply
 
-- (instancetype)initWithOpponentPlayer:(PNPPlayer *)opponentPlayer andMatchChannelName:(NSString *)matchChannelName andReply:(BOOL)reply {
+- (instancetype)initReply:(BOOL)reply withOpponentPlayer:(PNPPlayer *)opponentPlayer andMatchChannelName:(NSString *)matchChannelName {
     self = [super init];
     if (self) {
         _matchChannelName = matchChannelName;
@@ -84,8 +84,17 @@
     return self;
 }
 
-+ (instancetype)replyWithOpponentPlayer:(PNPPlayer *)opponentPlayer andMatchChannelName:(NSString *)matchChannelName andReply:(BOOL)reply {
-    return [[self alloc] initWithOpponentPlayer:opponentPlayer andMatchChannelName:matchChannelName andReply:reply];
++ (instancetype)reply:(BOOL)reply withOpponentPlayer:(PNPPlayer *)opponentPlayer andMatchChannelName:(NSString *)matchChannelName {
+    return [[self alloc] initReply:reply withOpponentPlayer:opponentPlayer andMatchChannelName:matchChannelName];
+}
+
+- (instancetype)initReply:(BOOL)reply withMatchProposal:(PNPMatchProposal *)matchProposal {
+    self = [self initReply:reply withOpponentPlayer:matchProposal.opponent andMatchChannelName:matchProposal.matchChannelName];
+    return self;
+}
+
++ (instancetype)reply:(BOOL)reply withProposal:(PNPMatchProposal *)matchProposal {
+    return [[self alloc] initReply:reply withMatchProposal:matchProposal];
 }
 
 + (BOOL)canBeInitializedWithDictionary:(NSDictionary *)dictionary {
@@ -98,10 +107,11 @@
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary {
     NSParameterAssert(dictionary);
     NSParameterAssert([dictionary[@"type"] isEqualToString:@"reply"]);
+    NSParameterAssert(dictionary[@"reply"]);
     PNPPlayer *opponentPlayer = [[PNPPlayer alloc] initWithDictionary:dictionary[@"opponent"]];
     BOOL reply = [dictionary[@"reply"] boolValue];
     NSString *matchChannelName = dictionary[@"matchChannelName"];
-    return [[self class] replyWithOpponentPlayer:opponentPlayer andMatchChannelName:matchChannelName andReply:reply];
+    return [[self class] reply:reply withOpponentPlayer:opponentPlayer andMatchChannelName:matchChannelName];
 }
 
 - (id)JSONFormattedMessage {
@@ -141,18 +151,32 @@
 }
 
 - (BOOL)proposeMatchToPlayer:(PNPPlayer *)opponent {
-    if (
-        [opponent isEqual:self.localPlayer] ||
-        self.state == PNPMatchmakerStateProposing ||
-        self.state == PNPMatchmakerStateAccepted
-        ) {
-        return NO;
-    }
+//    if (
+//        [opponent isEqual:self.localPlayer] ||
+//        self.state == PNPMatchmakerStateProposing ||
+//        self.state == PNPMatchmakerStateAccepted
+//        ) {
+//        return NO;
+//    }
     NSString *matchChannelName = [NSUUID UUID].UUIDString;
     PNPMatchProposal *proposal = [PNPMatchProposal proposalWithCreator:self.localPlayer andOpponent:opponent andMatchChannelName:matchChannelName];
     self.state = PNPMatchmakerStateProposing;
     [self.client subscribeToChannels:@[matchChannelName] withPresence:YES];
     [self.client publish:proposal.JSONFormattedMessage toChannel:kPNPLobbyChannel withCompletion:^(PNPublishStatus * _Nonnull status) {
+        
+    }];
+    return YES;
+}
+
+- (BOOL)replyToMatchProposal:(PNPMatchProposal *)matchProposal withDecision:(BOOL)willPlay {
+//    if (
+//        [matchProposal.opponent isEqual:self.localPlayer] ||
+//        self.state == PNPMatchmakerStateAccepted
+//        ) {
+//        return NO;
+//    }
+    PNPMatchProposalReply *reply = [PNPMatchProposalReply reply:willPlay withProposal:matchProposal];
+    [self.client publish:reply.JSONFormattedMessage toChannel:kPNPLobbyChannel withCompletion:^(PNPublishStatus * _Nonnull status) {
         
     }];
     return YES;
@@ -166,19 +190,20 @@
 
 - (void)client:(PubNub *)client didReceiveMessage:(PNMessageResult *)message {
     if (
-        (self.state == PNPMatchmakerStateOpen) &&
+//        (self.state == PNPMatchmakerStateOpen) &&
         [PNPMatchProposal canBeInitializedWithDictionary:message.data.message]
         ) {
         [self.delegate matchmaker:self receivedMatchProposal:[PNPMatchProposal proposalFromDictionary:message.data.message]];
         return;
     }
     if (
-        (self.state == PNPMatchmakerStateProposing) &&
+//        (self.state == PNPMatchmakerStateProposing) &&
         [PNPMatchProposalReply canBeInitializedWithDictionary:message.data.message]
         ) {
         PNPMatchProposalReply *reply = [[PNPMatchProposalReply alloc] initWithDictionary:message.data.message];
         self.state = (reply.reply ? PNPMatchmakerStateAccepted : PNPMatchmakerStateOpen);
         [self.delegate matchmaker:self receivedMatchProposalReply:reply];
+        return;
     }
 }
 
