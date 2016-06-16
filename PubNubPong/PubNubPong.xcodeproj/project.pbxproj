@@ -15,7 +15,6 @@
 		516389F11D0F21EF00E6401E /* PubNubPongUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 516389F01D0F21EF00E6401E /* PubNubPongUITests.m */; };
 		51638A031D0F26BC00E6401E /* PNPPaddleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 51638A021D0F26BC00E6401E /* PNPPaddleView.m */; };
 		51638A061D0F26EC00E6401E /* PNPBallView.m in Sources */ = {isa = PBXBuildFile; fileRef = 51638A051D0F26EC00E6401E /* PNPBallView.m */; };
-		51638A171D0F501300E6401E /* PNPMessenger.m in Sources */ = {isa = PBXBuildFile; fileRef = 51638A161D0F501300E6401E /* PNPMessenger.m */; };
 		51B1EA831D13268F00669390 /* MatchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 51B1EA821D13268F00669390 /* MatchViewController.m */; };
 		51B1EA861D1326B800669390 /* PNPMatchUpdater.m in Sources */ = {isa = PBXBuildFile; fileRef = 51B1EA851D1326B800669390 /* PNPMatchUpdater.m */; };
 		51CBBE1A1D10B695006B6E3D /* ChooseUsernameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 51CBBE191D10B695006B6E3D /* ChooseUsernameViewController.m */; };
@@ -67,8 +66,6 @@
 		51638A0A1D0F323500E6401E /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = "<group>"; };
 		51638A0B1D0F323E00E6401E /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		51638A0C1D0F324500E6401E /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
-		51638A151D0F501300E6401E /* PNPMessenger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PNPMessenger.h; sourceTree = "<group>"; };
-		51638A161D0F501300E6401E /* PNPMessenger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PNPMessenger.m; sourceTree = "<group>"; };
 		51B1EA811D13268F00669390 /* MatchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatchViewController.h; sourceTree = "<group>"; };
 		51B1EA821D13268F00669390 /* MatchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatchViewController.m; sourceTree = "<group>"; };
 		51B1EA841D1326B800669390 /* PNPMatchUpdater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PNPMatchUpdater.h; sourceTree = "<group>"; };
@@ -237,8 +234,6 @@
 				51CF32CA1D11C8B700CA58EA /* JSONFormatting.h */,
 				51B1EA841D1326B800669390 /* PNPMatchUpdater.h */,
 				51B1EA851D1326B800669390 /* PNPMatchUpdater.m */,
-				51638A151D0F501300E6401E /* PNPMessenger.h */,
-				51638A161D0F501300E6401E /* PNPMessenger.m */,
 			);
 			name = "Pong Message";
 			sourceTree = "<group>";
@@ -452,7 +447,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				51638A171D0F501300E6401E /* PNPMessenger.m in Sources */,
 				51CF32C61D11BB0800CA58EA /* PNPLobby.m in Sources */,
 				51B1EA831D13268F00669390 /* MatchViewController.m in Sources */,
 				51CF32C31D11BAFE00CA58EA /* PNPPlayer.m in Sources */,
