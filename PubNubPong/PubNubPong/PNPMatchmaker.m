@@ -48,6 +48,9 @@
 }
 
 - (id)JSONFormattedMessage {
+    if (!self.opponent) {
+        return nil;
+    }
     return @{
              @"type": @"proposal",
              @"creator": self.creator.JSONFormattedMessage,
@@ -152,9 +155,9 @@
 
 - (BOOL)proposeMatchToPlayer:(PNPPlayer *)opponent {
 //    if (
-//        [opponent isEqual:self.localPlayer] ||
-//        self.state == PNPMatchmakerStateProposing ||
-//        self.state == PNPMatchmakerStateAccepted
+//        [opponent isEqual:self.localPlayer]
+////        self.state == PNPMatchmakerStateProposing ||
+////        self.state == PNPMatchmakerStateAccepted
 //        ) {
 //        return NO;
 //    }
@@ -170,8 +173,8 @@
 
 - (BOOL)replyToMatchProposal:(PNPMatchProposal *)matchProposal withDecision:(BOOL)willPlay {
 //    if (
-//        [matchProposal.opponent isEqual:self.localPlayer] ||
-//        self.state == PNPMatchmakerStateAccepted
+//        [matchProposal.opponent isEqual:self.localPlayer]
+////        self.state == PNPMatchmakerStateAccepted
 //        ) {
 //        return NO;
 //    }
@@ -191,9 +194,14 @@
 - (void)client:(PubNub *)client didReceiveMessage:(PNMessageResult *)message {
     if (
 //        (self.state == PNPMatchmakerStateOpen) &&
+        
         [PNPMatchProposal canBeInitializedWithDictionary:message.data.message]
         ) {
-        [self.delegate matchmaker:self receivedMatchProposal:[PNPMatchProposal proposalFromDictionary:message.data.message]];
+        PNPMatchProposal *proposal = [PNPMatchProposal proposalFromDictionary:message.data.message];
+        // make sure to not show proposals to the creator
+        if (![proposal.creator isEqualToPlayer:self.localPlayer]) {
+            [self.delegate matchmaker:self receivedMatchProposal:[PNPMatchProposal proposalFromDictionary:message.data.message]];
+        }
         return;
     }
     if (
@@ -201,8 +209,11 @@
         [PNPMatchProposalReply canBeInitializedWithDictionary:message.data.message]
         ) {
         PNPMatchProposalReply *reply = [[PNPMatchProposalReply alloc] initWithDictionary:message.data.message];
-        self.state = (reply.reply ? PNPMatchmakerStateAccepted : PNPMatchmakerStateOpen);
-        [self.delegate matchmaker:self receivedMatchProposalReply:reply];
+        // only show replies to the local player
+        if ([reply.opponentPlayer isEqualToPlayer:self.localPlayer]) {
+            self.state = (reply.reply ? PNPMatchmakerStateAccepted : PNPMatchmakerStateOpen);
+            [self.delegate matchmaker:self receivedMatchProposalReply:reply];
+        }
         return;
     }
 }

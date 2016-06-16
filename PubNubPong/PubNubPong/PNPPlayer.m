@@ -43,4 +43,31 @@
              };
 }
 
+- (NSUInteger)hash {
+//    return [self.item hash] ^ [self.uniqueIdentifier hash];
+    return [self.uniqueIdentifier hash];
+}
+
+- (BOOL)isEqualToPlayer:(PNPPlayer *)player {
+    if (!player) {
+        return NO;
+    }
+    
+    BOOL haveEqualIdentifiers = [self.uniqueIdentifier isEqualToString:player.uniqueIdentifier];
+    
+    return haveEqualIdentifiers;
+}
+
+- (BOOL)isEqual:(id)object {
+    if (self == object) {
+        return YES;
+    }
+    
+    if (![object isKindOfClass:[PNPPlayer class]]) {
+        return NO;
+    }
+    
+    return [self isEqualToPlayer:object];
+}
+
 @end

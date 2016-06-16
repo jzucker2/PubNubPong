@@ -14,6 +14,8 @@
 - (instancetype)initWithUniqueIdentifier:(NSString *)uniqueIdentifier;
 + (instancetype)playerWithUniqueIdentifier:(NSString *)uniqueIdentifier;
 
+- (BOOL)isEqualToPlayer:(PNPPlayer *)player;
+
 @property (nonatomic, copy, readonly) NSString *uniqueIdentifier;
 
 @end
